@@ -1,0 +1,3 @@
+[submodule "SE30x"]
+	path = SE30x
+	url = git@github.com:romgobox/SE30x.git
