@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+	<li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+</ul>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>HOME</h3>
+      <table class="table table-bordered">
+<tr>
+    <th>ID</th>
+    <th>Адрес</th>
+    <th>Описание</th>
+    <th>IP адрес</th>
+    <th>IP порт</th>
+    <th>Действие</th>
+</tr>
+{% for c in cur%}
+    <tr>
+        <td id="wh{{ c[0] }}">{{ c[0] }}</td>
+        <td><a href="{{ url_for('get_meter_id', id=c[0])}}">{{ c[1] }}</a></td>
+        <td>{{ c[2] }}</td>
+        <td>{{ c[3] }}</td>
+        <td>{{ c[4] }}</td>
+        <td> <button onclick="get_whID('wh{{ c[0] }}')" class="btn btn-default">Зафиксированные показания</button></td>
+    </tr>
+{%endfor%}
+</table>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+
+<div id="status" style="display: none;">Загрузка данных...</div>
+<div id="data"></div>
+
+<script>
+$('#data').draggable();
+function get_whID(whID) {
+
+	var wh_id = $("#"+whID).html();
+	$("#status").show()
+	$.ajax({
+		url: '/get_val',
+	    type: "POST",
+	    data: JSON.stringify({id: wh_id}),
+	    dataType: "json",
+	    contentType: "application/json",
+	    success: function(data){
+	    	$("#status").hide()
+			var adr = data.adr;
+	    	var whnum = data.whnum;
+	    	var sum = data.sum;
+	    	var T1 = data.T1;
+	    	var T2 = data.T2;
+	    	var html = "<table class=\"table table-bordered\">\
+					<tr>\
+						<th>Адрес</th>\
+						<th>Серийный номер</th>\
+						<th>Сумма, кВт*ч</th>\
+						<th>Т1, кВт*ч</th>\
+						<th>Т2, кВт*ч</th>\
+					</tr>"
+				html += "\
+					<tr>\
+						<td>"+adr+"</td>\
+						<td>"+whnum+"</td>\
+						<td>"+sum+"</td>\
+						<td>"+T1+"</td>\
+						<td>"+T2+"</td>\
+					</tr></table>"
+	        $("#data").html(html);
+	    }
+	});
+
+	/*$.getJSON('/get_val',
+		{
+			id: wh_id
+		},
+		function(data) {
+			$("#data").text(data.result);
+		});*/
+}
+
+</script
+{% endblock %}
