@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Приборы учета</a></li>
+    <li><a data-toggle="tab" href="#menu1">Каналы учета</a></li>
+</ul>
+
+<div id="wh_edit_dialog"></div>
+<div id="wh_delete_dialog"></div>
+<div id="wh_add_dialog"></div>
+
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+    <div class="panel panel-default">
+          <div id="wh_menu" class="panel-body">
+            <button class="add_wh btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить прибор учета</button>
+          </div>
+    </div>
+    
+      <table id="wh_table" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Описание</th>
+                <th>Номер</th>
+                <th>Адрес</th>
+                <th>Настройки</th>
+                <th>Канал</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        </table>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+  </div>
+
+<div id="status" style="display: none;">Загрузка данных...</div>
+<div id="data"></div>
+
+<div id="dialogs"></div>
+
+{% endblock %}
