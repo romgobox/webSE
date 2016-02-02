@@ -3,12 +3,97 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 var Meters = function() {
-    this.meters = {}
-    this.dialogs = {};
+    this.objects = {};
+    this.protocols = {};
+    this.channels = {};
+    // this.meters = {}
+    this.meters = [];
+};
+
+Meters.prototype.addObject = function(object) {
+    this.objects[object.id] = object;
+};
+
+Meters.prototype.addProtocol = function(protocol) {
+    this.protocols[protocol.id] = protocol;
+};
+
+Meters.prototype.addChannel = function(channel) {
+    this.channels[channel.id] = channel;
 };
 
 Meters.prototype.addMeter = function(meter) {
-    this.meters[meter.id] = meter;
+    // var id = meter.id;
+    // this.meters[id] = meter;
+    this.meters.push(meter);
+    this.meters.sort(function(a,b) {
+        return parseInt(a.wh_object.id) - parseInt(b.wh_object.id);
+    });
+};
+
+Meters.prototype.getObjects = function() {
+    var self = this;
+    $.ajax({
+        url: "/objects",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addObject(new whObject(item));
+                    });
+                }
+    });
+};
+
+Meters.prototype.getProtocols = function() {
+    var self = this;
+    $.ajax({
+        url: "/protocols",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addProtocol(new Protocol(item));
+                    });
+                }
+    });
+};
+
+Meters.prototype.getChannels = function() {
+    var self = this;
+    $.ajax({
+        url: "/channels",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addChannel(new Channel(item));
+                    });
+                }
+    });
+};
+
+Meters.prototype.getMeters = function() {
+    var self = this;
+    var meters = this;
+    $.ajax({
+        url: "/meters",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addMeter(new Meter(item, self));
+                    });
+                }
+    });
 };
 
 Meters.prototype.addNewMeter = function (data) {
@@ -21,11 +106,48 @@ Meters.prototype.addNewMeter = function (data) {
         dataType: "json",
         contentType: "application/json",
         success: function(data){
-            var meter = new Meter(data);
+            var meter = new Meter(data, self);
             self.addMeter(meter);
-            html = meter.renderMeterTR();
-            $("#wh_table tbody").append(html);
-            $("#data").html(data['status']);
+            self.renderMetersTable();
+            showStatusDialog('success', data['status'], 'Добавлен прибор учета');
+        }
+    });
+};
+
+Meters.prototype.addNewChannel = function (data) {
+    var self = this
+    $.ajax({
+        url: "/addchannel",
+        type: "PUT",
+        async: false,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data){
+            var channel = new Channel(data, self);
+            self.addChannel(channel);
+            html = channel.renderChannelTR();
+            $("#ch_table tbody").append(html);
+            showStatusDialog('success', data['status'], 'Добавлен канал опроса');
+        }
+    });
+};
+
+Meters.prototype.addNewObject = function (data) {
+    var self = this
+    $.ajax({
+        url: "/addobject",
+        type: "PUT",
+        async: false,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data){
+            var object = new whObject(data, self);
+            self.addObject(object);
+            html = object.renderObjectTR();
+            $("#obj_table tbody").append(html);
+            showStatusDialog('success', data['status'], 'Добавлен объект');
         }
     });
 };
@@ -42,26 +164,42 @@ Meters.prototype.deleteMeter = function(whID) {
         success: function(data){
             $("#wh_"+whID).remove();
             delete self.meters[whID];
-            $("#data").html(data['status']);
+            showStatusDialog('warning', data['status'], 'Удален прибор учета');
         }
     });
-}
+};
 
-Meters.prototype.getMeters = function() {
+Meters.prototype.deleteChannel = function(chID) {
+    var chID = chID;
     var self = this;
     $.ajax({
-        url: "/meters",
-        type: "GET",
+        url: "/delchannel/"+chID,
+        type: "POST",
         async: false,
         dataType: "json",
         contentType: "application/json",
-        success: function (data) {
-                    var html = ''
-                    var id = ''
-                    $.each(data, function(index, item) {
-                        self.addMeter(new Meter(item));
-                    });
-                }
+        success: function(data){
+            $("#ch_"+chID).remove();
+            delete self.channels[chID];
+            showStatusDialog('warning', data['status'], 'Удален канал опроса');
+        }
+    });
+};
+
+Meters.prototype.deleteObject = function(objID) {
+    var objID = objID;
+    var self = this;
+    $.ajax({
+        url: "/delobject/"+objID,
+        type: "POST",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data){
+            $("#obj_"+objID).remove();
+            delete self.objects[objID];
+            showStatusDialog('warning', data['status'], 'Удален объект учета');
+        }
     });
 };
 
@@ -74,6 +212,38 @@ Meters.prototype.renderMetersTable = function() {
     return html;
 };
 
+Meters.prototype.renderChannelsTable = function() {
+    var html = '';    
+    for (var m in this.channels) {
+        html += this.channels[m].renderChannelTR();
+    };
+    $("#ch_table tbody").html(html);
+    return html;
+};
+
+Meters.prototype.renderObjectsTable = function() {
+    var html = '';    
+    for (var m in this.objects) {
+        html += this.objects[m].renderObjectTR();
+    };
+    $("#obj_table tbody").html(html);
+    return html;
+};
+
+
+
 Meters.prototype.returnMeter = function(id) {
-    return this.meters[id];
+    for (var m in this.meters) {
+        if (this.meters[m]['id'] === id) {
+            return this.meters[m];
+        };
+    };
+};
+
+Meters.prototype.returnChannel = function(id) {
+    return this.channels[id];
+};
+
+Meters.prototype.returnObject = function(id) {
+    return this.objects[id];
 };

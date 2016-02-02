@@ -2,14 +2,17 @@
 // Meter
 ////////////////////////////////////////////////////////////////////////////////
 
-var Meter = function(data) {
+var Meter = function(data, meters) {
     this.id = data['id'];
-    this.wh_desc = data['wh_desc'];
-    this.wh_num = data['wh_num'];
     this.wh_adr = data['wh_adr'];
-    this.ppValue = data['wh_settings']['ppValue']['depth'];
-    this.fixDay = data['wh_settings']['fixDay']['depth'];
-    this.channel_id = data['channel_id'];
+    this.wh_num = data['wh_num'];
+    this.wh_pass = data['wh_pass'];
+    this.wh_object = meters.objects[data['obj_id']];
+    this.wh_desc = data['wh_desc'];
+    this.ppValue = data['wh_settings']['ppValue'];
+    this.fixDay = data['wh_settings']['fixDay'];
+    this.wh_protocol = meters.protocols[data['pr_id']];
+    this.wh_channel = typeof meters.channels[data['ch_id']] == 'undefined' ? {} : meters.channels[data['ch_id']];
 };
 
 Meter.prototype.getParams = function () {
@@ -27,8 +30,9 @@ Meter.prototype.renderMeterTR = function() {
     return meterTR(this);
 };
 
-Meter.prototype.saveParams = function (params) {
+Meter.prototype.saveParams = function (params, meters) {
     var self = this;
+    var meters = meters;
     var params = params;
     $.ajax({
         url: "/meterinfo/"+self.id,
@@ -38,20 +42,23 @@ Meter.prototype.saveParams = function (params) {
         dataType: "json",
         contentType: "application/json",
         success: function(data){
-            self.updateData(params);
-            html = self.renderMeterTR();
+            self.updateData(params, meters);
+            var html = self.renderMeterTR();
             $("#wh_"+self.id).replaceWith(html);
-            $("#data").html(data['status']);
+            showStatusDialog('info', data['status'], 'Изменен прибор учета');
         }
     });
 };
 
-Meter.prototype.updateData = function (data) {
+Meter.prototype.updateData = function (data, meters) {
     this.id = data['id'];
-    this.wh_desc = data['wh_desc'];
-    this.wh_num = data['wh_num'];
     this.wh_adr = data['wh_adr'];
-    this.ppValue = data['wh_settings']['ppValue']['depth'];
-    this.fixDay = data['wh_settings']['fixDay']['depth'];
-    this.channel_id = data['channel_id'];
+    this.wh_num = data['wh_num'];
+    this.wh_pass = data['wh_pass'];
+    this.wh_object = meters.objects[data['obj_id']];
+    this.wh_desc = data['wh_desc'];
+    this.ppValue = data['wh_settings']['ppValue'];
+    this.fixDay = data['wh_settings']['fixDay'];
+    this.wh_protocol = meters.protocols[data['pr_id']];
+    this.wh_channel = meters.channels[data['ch_id']];
 }
