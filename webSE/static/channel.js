@@ -19,8 +19,8 @@ Channel.prototype.saveParams = function (params, meters) {
     var meters = meters;
     var params = params;
     $.ajax({
-        url: "/channelinfo/"+self.id,
-        type: "POST",
+        url: "/channels/"+self.id,
+        type: "PUT",
         async: false,
         data: JSON.stringify(params),
         dataType: "json",

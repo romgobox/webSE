@@ -16,8 +16,8 @@ whObject.prototype.saveParams = function (params, meters) {
     var meters = meters;
     var params = params;
     $.ajax({
-        url: "/objectinfo/"+self.id,
-        type: "POST",
+        url: "/objects/"+self.id,
+        type: "PUT",
         async: false,
         data: JSON.stringify(params),
         dataType: "json",
