@@ -27,7 +27,7 @@ Meters.prototype.addMeter = function(meter) {
     // this.meters[id] = meter;
     this.meters.push(meter);
     this.meters.sort(function(a,b) {
-        return parseInt(a.wh_object.id) - parseInt(b.wh_object.id);
+        return parseInt(a.object_id.id) - parseInt(b.object_id.id);
     });
 };
 
@@ -99,8 +99,8 @@ Meters.prototype.getMeters = function() {
 Meters.prototype.addNewMeter = function (data) {
     var self = this
     $.ajax({
-        url: "/addmeter",
-        type: "PUT",
+        url: "/meters",
+        type: "POST",
         async: false,
         data: JSON.stringify(data),
         dataType: "json",
@@ -117,8 +117,8 @@ Meters.prototype.addNewMeter = function (data) {
 Meters.prototype.addNewChannel = function (data) {
     var self = this
     $.ajax({
-        url: "/addchannel",
-        type: "PUT",
+        url: "/channels",
+        type: "POST",
         async: false,
         data: JSON.stringify(data),
         dataType: "json",
@@ -136,8 +136,8 @@ Meters.prototype.addNewChannel = function (data) {
 Meters.prototype.addNewObject = function (data) {
     var self = this
     $.ajax({
-        url: "/addobject",
-        type: "PUT",
+        url: "/objects",
+        type: "POST",
         async: false,
         data: JSON.stringify(data),
         dataType: "json",
@@ -156,14 +156,19 @@ Meters.prototype.deleteMeter = function(whID) {
     var whID = whID;
     var self = this;
     $.ajax({
-        url: "/delmeter/"+whID,
-        type: "POST",
+        url: "/meters/"+whID,
+        type: "DELETE",
         async: false,
         dataType: "json",
         contentType: "application/json",
         success: function(data){
             $("#wh_"+whID).remove();
-            delete self.meters[whID];
+            // delete self.meters[whID];
+            for (var i = 0; i < self.meters.length; i++) {
+                if (self.meters[i].id == whID) {
+                    self.meters.splice(i, 1);
+                };
+            };
             showStatusDialog('warning', data['status'], 'Удален прибор учета');
         }
     });
@@ -173,8 +178,8 @@ Meters.prototype.deleteChannel = function(chID) {
     var chID = chID;
     var self = this;
     $.ajax({
-        url: "/delchannel/"+chID,
-        type: "POST",
+        url: "/channels/"+chID,
+        type: "DELETE",
         async: false,
         dataType: "json",
         contentType: "application/json",
@@ -190,8 +195,8 @@ Meters.prototype.deleteObject = function(objID) {
     var objID = objID;
     var self = this;
     $.ajax({
-        url: "/delobject/"+objID,
-        type: "POST",
+        url: "/objects/"+objID,
+        type: "DELETE",
         async: false,
         dataType: "json",
         contentType: "application/json",

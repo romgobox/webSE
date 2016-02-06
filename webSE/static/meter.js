@@ -7,12 +7,12 @@ var Meter = function(data, meters) {
     this.wh_adr = data['wh_adr'];
     this.wh_num = data['wh_num'];
     this.wh_pass = data['wh_pass'];
-    this.wh_object = meters.objects[data['obj_id']];
+    this.object_id = typeof meters.objects[data['object_id']] == 'undefined' ? {} : meters.objects[data['object_id']];
     this.wh_desc = data['wh_desc'];
     this.ppValue = data['wh_settings']['ppValue'];
     this.fixDay = data['wh_settings']['fixDay'];
-    this.wh_protocol = meters.protocols[data['pr_id']];
-    this.wh_channel = typeof meters.channels[data['ch_id']] == 'undefined' ? {} : meters.channels[data['ch_id']];
+    this.protocol_id = typeof meters.protocols[data['protocol_id']] == 'undefined' ? {} : meters.protocols[data['protocol_id']];
+    this.channel_id = typeof meters.channels[data['channel_id']] == 'undefined' ? {} : meters.channels[data['channel_id']];
 };
 
 Meter.prototype.getParams = function () {
@@ -35,8 +35,8 @@ Meter.prototype.saveParams = function (params, meters) {
     var meters = meters;
     var params = params;
     $.ajax({
-        url: "/meterinfo/"+self.id,
-        type: "POST",
+        url: "/meters/"+self.id,
+        type: "PUT",
         async: false,
         data: JSON.stringify(params),
         dataType: "json",
@@ -55,10 +55,10 @@ Meter.prototype.updateData = function (data, meters) {
     this.wh_adr = data['wh_adr'];
     this.wh_num = data['wh_num'];
     this.wh_pass = data['wh_pass'];
-    this.wh_object = meters.objects[data['obj_id']];
+    this.object_id = typeof meters.objects[data['object_id']] == 'undefined' ? {} : meters.objects[data['object_id']];
     this.wh_desc = data['wh_desc'];
     this.ppValue = data['wh_settings']['ppValue'];
     this.fixDay = data['wh_settings']['fixDay'];
-    this.wh_protocol = meters.protocols[data['pr_id']];
-    this.wh_channel = meters.channels[data['ch_id']];
+    this.protocol_id = typeof meters.protocols[data['protocol_id']] == 'undefined' ? {} : meters.protocols[data['protocol_id']];
+    this.channel_id = typeof meters.channels[data['channel_id']] == 'undefined' ? {} : meters.channels[data['channel_id']];
 }

@@ -38,13 +38,13 @@ function addMeterDialog(meters) {
     var meters = meters;
     var html = '';
     html += '<table id="wh_add" class="table table-bordered table-hover">';
-    html += '<tr><td>Объект</td><td><select id="wh_object">';
+    html += '<tr><td>Объект</td><td><select id="object_id">';
     for (var obj in meters.objects) {
         html += '<option value="'+meters.objects[obj].id+'">'+meters.objects[obj].obj_desc+'</option>'
     };
     html += '</select></td></tr>';
     html += '<tr><td>Описание</td><td><input id="wh_desc" type="text" value=""></td></tr>';
-    html += '<tr><td>Протокол</td><td><select id="wh_protocol">';
+    html += '<tr><td>Протокол</td><td><select id="protocol_id">';
     for (var pr in meters.protocols) {
         html += '<option value="'+meters.protocols[pr].id+'">'+meters.protocols[pr].pr_desc+'</option>'
     };
@@ -54,7 +54,7 @@ function addMeterDialog(meters) {
     html += '<tr><td>Пароль</td><td><input id="wh_pass" type="text" value=""></td></tr>';
     html += '<tr><td>Профиль глубина</td><td><input id="ppValue" type="text" value=""></tr>';
     html += '<tr><td>Показания глубина</td><td><input id="fixDay" type="text" value=""></td></tr>';
-    html += '<tr><td>Канал опроса</td><td><select id="wh_channel">';
+    html += '<tr><td>Канал опроса</td><td><select id="channel_id">';
     for (var ch in meters.channels) {
         html += '<option value="'+meters.channels[ch].id+'">'+meters.channels[ch].ch_desc+'</option>'
     };
@@ -62,16 +62,16 @@ function addMeterDialog(meters) {
     html += '</table>';
     function collectValues(tableID) {
         var result = {};
-        result['obj_id'] = $(tableID).find("#wh_object").val();
+        result['object_id'] = $(tableID).find("#object_id").val();
         result['wh_desc'] = $(tableID).find("#wh_desc").val();
-        result['pr_id'] = $(tableID).find("#wh_protocol").val();
+        result['protocol_id'] = $(tableID).find("#protocol_id").val();
         result['wh_num'] = $(tableID).find("#wh_num").val();
         result['wh_adr'] = $(tableID).find("#wh_adr").val();
         result['wh_pass'] = $(tableID).find("#wh_pass").val();
         var ppV = $(tableID).find("#ppValue").val();
         var fixD = $(tableID).find("#fixDay").val();
         result['wh_settings'] = {fixDay:fixD, ppValue:ppV};
-        result['ch_id'] = $(tableID).find("#wh_channel").val();
+        result['channel_id'] = $(tableID).find("#channel_id").val();
         return result;
     }
     $("#wh_add_dialog").html(html);
@@ -103,9 +103,9 @@ function editMeterDialog(meter, meters) {
     var meters = meters;
     var html = '';
     html += '<table id="wh_edit_'+self.id+'" class="table table-bordered table-hover">';
-    html += '<tr><td>Объект</td><td><select id="wh_object">';
+    html += '<tr><td>Объект</td><td><select id="object_id">';
     for (var obj in meters.objects) {
-        if (self.wh_object.id === meters.objects[obj].id) {
+        if (self.object_id.id === meters.objects[obj].id) {
             html += '<option selected value="'+meters.objects[obj].id+'">'+meters.objects[obj].obj_desc+'</option>';  
         }
         else {
@@ -114,9 +114,9 @@ function editMeterDialog(meter, meters) {
     };
     html += '</select></td></tr>';
     html += '<tr><td>Описание</td><td><input id="wh_desc" type="text" value="'+self.wh_desc+'"></td></tr>';
-    html += '<tr><td>Протокол</td><td><select id="wh_protocol">';
+    html += '<tr><td>Протокол</td><td><select id="protocol_id">';
     for (var pr in meters.protocols) {
-        if (self.wh_protocol.id === meters.protocols[pr].id) {
+        if (self.protocol_id.id === meters.protocols[pr].id) {
             html += '<option selected value="'+meters.protocols[pr].id+'">'+meters.protocols[pr].pr_desc+'</option>'
         }
         else {
@@ -129,9 +129,9 @@ function editMeterDialog(meter, meters) {
     html += '<tr><td>Пароль</td><td><input id="wh_pass" type="text" value="'+self.wh_pass+'"></td></tr>';
     html += '<tr><td>Профиль глубина</td><td><input id="ppValue" type="text" value="'+self.ppValue+'"></tr>';
     html += '<tr><td>Показания глубина</td><td><input id="fixDay" type="text" value="'+self.fixDay+'"></td></tr>';
-    html += '<tr><td>Канал опроса</td><td><select id="wh_channel">';
+    html += '<tr><td>Канал опроса</td><td><select id="channel_id">';
     for (var ch in meters.channels) {
-        if (self.wh_channel.id === meters.channels[ch].id) {
+        if (self.channel_id.id === meters.channels[ch].id) {
             html += '<option selected value="'+meters.channels[ch].id+'">'+meters.channels[ch].ch_desc+'</option>'
         }
         else {
@@ -143,16 +143,16 @@ function editMeterDialog(meter, meters) {
     function collectValues(tableID) {
         var result = {};
         result['id'] = self.id;
-        result['obj_id'] = $(tableID).find("#wh_object").val();
+        result['object_id'] = $(tableID).find("#object_id").val();
         result['wh_desc'] = $(tableID).find("#wh_desc").val();
-        result['pr_id'] = $(tableID).find("#wh_protocol").val();
+        result['protocol_id'] = $(tableID).find("#protocol_id").val();
         result['wh_num'] = $(tableID).find("#wh_num").val();
         result['wh_adr'] = $(tableID).find("#wh_adr").val();
         result['wh_pass'] = $(tableID).find("#wh_pass").val();
         var ppV = $(tableID).find("#ppValue").val();
         var fixD = $(tableID).find("#fixDay").val();
         result['wh_settings'] = {fixDay:fixD, ppValue:ppV};
-        result['ch_id'] = $(tableID).find("#wh_channel").val();
+        result['channel_id'] = $(tableID).find("#channel_id").val();
         return result;
     }
     $("#wh_edit_dialog").html(html);
@@ -472,11 +472,11 @@ function delObjectDialog(object, meters) {
 function meterTR(meter) {
     var html = '';
     html += '<tr id="wh_'+meter.id+'"><td width="50">'+meter.id+'</td>';
-    html += '<td id="wh_object">'+meter.wh_object['obj_desc']+'</td>';
+    html += '<td id="object_id">'+meter.object_id['obj_desc']+'</td>';
     html += '<td id="wh_desc">'+meter.wh_desc+'</td>';
     html += '<td id="wh_num">'+meter.wh_num+'</td>';
     html += '<td id="wh_adr">'+meter.wh_adr+'</td>';
-    html += '<td id="wh_channel">'+meter.wh_channel['ch_desc']+'</td>';
+    html += '<td id="channel_id">'+meter.channel_id['ch_desc']+'</td>';
     html += '<td width="400" align="center"><div class="btn-group">';
     html += '<button class="edit_info_wh btn btn-primary btn-sm" wh_id="'+meter.id+'" >';
     html += '<span class="glyphicon glyphicon-pencil"></span> Редактировать</button>';
