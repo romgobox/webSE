@@ -3,7 +3,7 @@
 import json
 from flask import request
 from flask.views import MethodView
-from webSE.api.model.protocols import get_protocols
+from webSE.api.model.reports import get_protocols
 
 
 class ProtocolsAPI(MethodView):
