@@ -8,6 +8,7 @@ var Channel = function(data) {
     this.ch_ip = data['ch_ip'];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
+    this.is_activ = data['is_activ'];
 };
 
 Channel.prototype.renderChannelTR = function() {
@@ -40,5 +41,6 @@ Channel.prototype.updateData = function (data, meters) {
     this.ch_ip = data['ch_ip'];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
+    this.is_activ = data['is_activ'];
 };
 

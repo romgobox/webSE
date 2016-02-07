@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, jsonify
+import json
 import webSE.api.model
 from webSE.api.meters import MetersAPI
 from webSE.api.channels import ChannelsAPI
@@ -12,6 +13,8 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     return render_template('index.html')
+
+import webSE.api.reports
 
 meters_view = MetersAPI.as_view('meters_api')
 app.add_url_rule('/meters', defaults={'meter_id': None}, view_func=meters_view, methods=['GET',])
