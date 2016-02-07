@@ -230,6 +230,10 @@ function addChannelDialog(meters) {
     html += '<tr><td>IP адрес</td><td><input id="ch_ip" type="text" value=""></td></tr>';
     html += '<tr><td>IP порт</td><td><input id="ch_port" type="text" value=""></td></tr>';
     html += '<tr><td>Настройки</td><td><input id="ch_settings" type="text" value=""></td></tr>';
+    html += '<tr><td>Активен</td><td><select id="ch_activ">';
+    html += '<option value="1">Да</option>';
+    html += '<option value="0">Нет</option>';
+    html += '</td></tr>';
     html += '</table>';
     function collectValues(tableID) {
         var result = {};
@@ -239,6 +243,7 @@ function addChannelDialog(meters) {
         result['ch_port'] = $(tableID).find("#ch_port").val();
         var settings = $(tableID).find("#ch_settings").val();
         result['ch_settings'] = {settings: settings};
+        result['is_activ'] = $(tableID).find("#ch_activ").val();
         return result;
     }
     $("#ch_add_dialog").html(html);
@@ -274,6 +279,21 @@ function editChannelDialog(channel, meters) {
     html += '<tr><td>IP адрес</td><td><input id="ch_ip" type="text" value="'+self.ch_ip+'"></td></tr>';
     html += '<tr><td>IP порт</td><td><input id="ch_port" type="text" value="'+self.ch_port+'"></td></tr>';
     html += '<tr><td>Настройки</td><td><input id="ch_settings" type="text" value="'+self.ch_settings.settings+'"></tr>';
+    html += '<tr><td>Активен</td><td><select id="ch_activ">';
+    if (self.is_activ == 1) {
+        html += '<option selected value="1">Да</option>';
+        html += '<option value="0">Нет</option>';
+    }
+    else if (self.is_activ == 0) {
+        html += '<option value="1">Да</option>';
+        html += '<option selected value="0">Нет</option>';
+    }
+    else {
+        html += '<option value="1">Да</option>';
+        html += '<option value="0">Нет</option>';
+    }
+    
+    html += '</td></tr>';
     html += '</table>';
     function collectValues(tableID) {
         var result = {};
@@ -283,6 +303,7 @@ function editChannelDialog(channel, meters) {
         result['ch_port'] = $(tableID).find("#ch_port").val();
         var settings = $(tableID).find("#ch_settings").val();
         result['ch_settings'] = {settings: settings};
+        result['is_activ'] = $(tableID).find("#ch_activ").val();
         return result;
     }
     $("#ch_edit_dialog").html(html);
@@ -487,7 +508,12 @@ function meterTR(meter) {
 
 function channelTR(channel) {
     var html = '';
-    html += '<tr id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
+    if (channel.is_activ == 0) {
+        html += '<tr style="background-color:grey;" id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
+    }
+    else {
+        html += '<tr id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
+    }
     html += '<td id="ch_desc">'+channel.ch_desc+'</td>';
     html += '<td id="ch_ip">'+channel.ch_ip+'</td>';
     html += '<td id="ch_port">'+channel.ch_port+'</td>';

@@ -37,6 +37,7 @@ CREATE TABLE `channels` (
   `ch_desc` VARCHAR(255) NULL DEFAULT NULL,
   `ch_ip` VARCHAR(50) NULL DEFAULT NULL,
   `ch_port` INTEGER NULL DEFAULT NULL,
+  `is_active` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 

@@ -23,6 +23,62 @@ function registerClick() {
     ////////////////////////////////////////////////////////////////////////////
     // Main menu
     ////////////////////////////////////////////////////////////////////////////
+    $("#main_menu").on('click', "#reports", function (e){
+        e.preventDefault();
+        renderReportsUI();
+        registerClick();
+    });
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Reports menu
+    ////////////////////////////////////////////////////////////////////////////
+    $("#reports_menu").on('click', ".fixday_report", function (e){
+        e.preventDefault();
+        ReportByMeterIDDialog(meters, 1, 'dates_list');
+        registerClick();
+    });
+
+    $("#reports_menu").on('click', ".fixday_diff_report", function (e){
+        e.preventDefault();
+        ReportByMeterIDDialog(meters, 1, 'dates_diff');
+        registerClick();
+    });
+
+    $("#reports_menu").on('click', ".ppvalue_report", function (e){
+        e.preventDefault();
+        ReportByMeterIDDialog(meters, 2, 'dates_list');
+        registerClick();
+    });
+
+    $("#select_object").on('change', function(e){
+        e.preventDefault();
+        metersSelectByObject(meters);
+    });
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Datepicker
+    ////////////////////////////////////////////////////////////////////////////
+    $.datepicker.regional['ru'] = { 
+        closeText: 'Закрыть', 
+        prevText: '&#x3c;Пред', 
+        nextText: 'След&#x3e;', 
+        currentText: 'Сегодня', 
+        monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь', 
+        'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'], 
+        monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн', 
+        'Июл','Авг','Сен','Окт','Ноя','Дек'], 
+        dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'], 
+        dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'], 
+        dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'], 
+        dateFormat: 'yy-mm-dd', 
+        firstDay: 1, 
+        isRTL: false 
+    }; 
+    $.datepicker.setDefaults($.datepicker.regional["ru"]);
+    $(".datepicker").datepicker();
+    ////////////////////////////////////////////////////////////////////////////
+    // Meters menu
+    ////////////////////////////////////////////////////////////////////////////
     $("#meters_menu").on('click', ".add_wh", function (e){
         e.preventDefault();
         addMeterDialog(meters);

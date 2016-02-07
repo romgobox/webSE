@@ -10,7 +10,8 @@ def get_channels():
         ch.ch_desc, 
         ch.ch_ip, 
         ch.ch_port,
-        ch.ch_settings
+        ch.ch_settings,
+        ch.is_activ
     FROM
         channels ch
     '''
@@ -32,12 +33,14 @@ def add_channel(data):
         '{ch_desc}', 
         '{ch_ip}', 
         {ch_port},  
-        '{ch_settings}') 
+        '{ch_settings}',
+        {is_activ}) 
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
             ch_port=data['ch_port'], 
-            ch_settings=json.dumps(data['ch_settings'])) 
+            ch_settings=json.dumps(data['ch_settings']),
+            is_activ=data['is_activ']) 
 
     response = {'status': u'Неопределено'}
     try:
@@ -58,13 +61,15 @@ def update_channel(chID, data):
         ch_desc='{ch_desc}', 
         ch_ip='{ch_ip}', 
         ch_port='{ch_port}', 
-        ch_settings='{ch_settings}'
+        ch_settings='{ch_settings}',
+        is_activ={is_activ}
     WHERE id={id}
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
             ch_port=data['ch_port'], 
             ch_settings=json.dumps(data['ch_settings']),
+            is_activ=data['is_activ'],
             id=chID)
 
     response = {'status': u'Неопределено'}
