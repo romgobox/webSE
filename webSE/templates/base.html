@@ -18,15 +18,16 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='meters-ui.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='meter.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='object.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='protocol.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='channel.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='meters.js') }}"></script>
-  </head>
-
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/meters-ui.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/meter.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/object.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/protocol.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/channel.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/meters.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/reports-ui.js') }}"></script>
+</head>
+<body>
   <div class="container">
     <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -36,34 +37,18 @@
             <a class="navbar-brand" href="/">Опрос счетчиков СЕ</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="/">Конфигурация</a></li>
-              <li><a href="#">Отчеты</a></li>
+            <ul id="main_menu" class="nav navbar-nav">
+              <li id="configurator"  class="active"><a href="/">Конфигурация</a></li>
+              <li id="reports"><a href="#">Отчеты</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-      <div class="panel panel-default">
-        <div class="row">
-          <div class="col-md-7">
-            <div style="float:left" id="meters_menu" class="panel-body">
-              <button class="add_wh btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить прибор учета</button>
-              <button class="add_ch btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить канал опроса</button>
-              <button href="#objects" class="add_obj btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить объект учета</button>
-            </div>
-          </div>
-          <div class="col-md-5">
-            <!-- <div id="status" class="alert alert-success"></div> -->
-          </div>
-        </div>
-    </div>
-
-      
+      <div id="content">
         {% block content %}
         {% endblock %}
-      
-
-    </div> 
+      </div>
+  </div> 
     
   </body>
 </html>
