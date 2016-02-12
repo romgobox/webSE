@@ -15,6 +15,7 @@ def hello():
     return render_template('index.html')
 
 import webSE.api.reports
+import webSE.api.requests_values
 
 meters_view = MetersAPI.as_view('meters_api')
 app.add_url_rule('/meters', defaults={'meter_id': None}, view_func=meters_view, methods=['GET',])

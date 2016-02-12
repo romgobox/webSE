@@ -15,8 +15,6 @@ function renderReportsUI() {
     html += '</div>';
     html += '<div id="fixday-report-dialog"></div>';
     html += '<div id="report_content"></div>';
-    $("#configurator").removeClass("active");
-    $("#reports").toggleClass("active");
     $("#content").html(html);
 }
 ////////////////////////////////////////////////////////////////////////////////

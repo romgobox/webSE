@@ -27,6 +27,8 @@ function registerClick() {
         e.preventDefault();
         renderReportsUI();
         registerClick();
+        $("#configurator").removeClass("active");
+        $("#reports").toggleClass("active");
     });
 
     ////////////////////////////////////////////////////////////////////////////
