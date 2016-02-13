@@ -107,9 +107,17 @@ function renderReportTable(data, meter, reportType) {
         html += '<th>Расход</th>';
         html += '</tr>';
         html += '<tr>';
+        if (data[0]['value'] != 'нет данных' && data[1]['value'] != 'нет данных') {
+            var diff = data[1]['value'] - data[0]['value'];
+            if (diff < 0) {
+                diff = diff * -1;
+            }
+        }
+        else {
+            var diff = 'нет данных';
+        }
         html += '<td>'+data[0]['value']+'</td>';
         html += '<td>'+data[1]['value']+'</td>';
-        var diff = data[1]['value'] - data[0]['value'];
         html += '<td>'+diff+'</td>';
         html += '</tr>';
         html += '</table>';
