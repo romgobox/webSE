@@ -2,42 +2,11 @@
 // UI elements
 ////////////////////////////////////////////////////////////////////////////////
 function renderMetersUI() {
-    html = '<div class="panel panel-default">';
-    html += '<div class="row">';
-    html += '<div class="col-md-7">';
-    html += '<div style="float:left" id="meters_menu" class="panel-body">';
-    html += '<button class="add_wh btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить прибор учета</button> ';
-    html += '<button class="add_ch btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить канал опроса</button> ';
-    html += '<button class="add_obj btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить объект учета</button> ';
-    html += '</div></div></div></div>';
-    html += '<ul class="nav nav-tabs">';
-    html += '<li class="active"><a data-toggle="tab" href="#meters">Приборы учета</a></li>';
-    html += '<li><a data-toggle="tab" href="#channels">Каналы опроса</a></li>';
-    html += '<li><a data-toggle="tab" href="#objects">Объекты учета</a></li></ul>';
-    html += '<div class="tab-content">';
-    html += '<div id="meters" class="tab-pane fade in active">';
-    html += '<table id="wh_table" class="table table-bordered table-hover">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<th>ID</th><th>Объект</th><th>Описание</th><th>Номер</th><th>Адрес</th><th>Канал</th><th>Действие</th>';
-    html += '</tr>';
-    html += '</thead><tbody></tbody></table></div>';
-    html += '<div id="channels" class="tab-pane fade">';
-    html += '<table id="ch_table" class="table table-bordered table-hover">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<th>ID</th><th>Описание</th><th>IP адрес</th><th>IP порт</th><th>Действие</th>';
-    html += '</tr>';
-    html += '</thead><tbody></tbody></table></div>';
-    html += '<div id="objects" class="tab-pane fade">';
-    html += '<table id="obj_table" class="table table-bordered table-hover">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<th>ID</th><th>Описание</th><th>Действие</th>';
-    html += '</tr>';
-    html += '</thead><tbody></tbody></table></div></div>';
-
-    $("#content").html(html);
+    if ($("#meters_ui").is(":hidden")) {
+        $("#meters_ui").show();
+        $("#reports_ui").hide();
+        $("#requests_ui").hide();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Dialogs

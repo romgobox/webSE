@@ -2,16 +2,11 @@
 // UI elements
 ////////////////////////////////////////////////////////////////////////////////
 function renderReportsUI() {
-    html = '<div class="panel panel-default">';
-    html += '<div class="row">';
-    html += '<div class="col-md-12">';
-    html += '<div id="reports_menu" class="panel-body">';
-    html += '<button class="fixday_report btn btn-info">Зафиксированные показания</button> ';
-    html += '<button class="fixday_diff_report btn btn-info">Расход за период</button> ';
-    html += '<button class="ppvalue_report btn btn-info">Профиль мощности</button> ';
-    html += '</div></div></div></div>';
-    html += '<div id="report_content"></div>';
-    $("#content").html(html);
+    if ($("#reports_ui").is(":hidden")) {
+        $("#meters_ui").hide();
+        $("#reports_ui").show();
+        $("#requests_ui").hide();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Dialogs
@@ -59,6 +54,10 @@ function ReportByMeterIDDialog(meters, param_num, reportType) {
         return result;
     }
     $("#fixday-report-dialog").html(html);
+    $("#select_object").on('change', function(e){
+        e.preventDefault();
+        metersSelectByObject(meters);
+    });
     $("#fixday-report-dialog").dialog({
         title: 'Выберете прибор учета и даты',
         height: 600,

@@ -8,26 +8,6 @@ from SE30x.algorithm import Algorithm
 gevent.monkey.patch_socket()
 
 
-
-def alg_run(channel):
-    # global result
-    algorithm = Algorithm(channels_id=[channel], alg_type='full')
-    # result.append(algorithm.requestResult)
-    return algorithm.requestResult
-
-def main():   
-    channels = [11,9]
-
-    requests = [gevent.spawn(alg_run, channel) for channel in channels]
-    gevent.joinall(requests)
-    # algorithm = Algorithm(channels_id=[12, 9], alg_type='full')
-    # result = algorithm.requestResult
-    import pudb; pu.db
-
-if __name__ == '__main__':
-    result = []
-    main()
-
 @app.route('/requests/channels', methods=['POST'])
 def requests_by_channels():
     channels = request.json['channels']
