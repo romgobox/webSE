@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template('index.html')
+    return render_template('base.html')
 
 import webSE.api.reports
 import webSE.api.requests_values

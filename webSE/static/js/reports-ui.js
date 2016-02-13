@@ -9,11 +9,7 @@ function renderReportsUI() {
     html += '<button class="fixday_report btn btn-info">Зафиксированные показания</button> ';
     html += '<button class="fixday_diff_report btn btn-info">Расход за период</button> ';
     html += '<button class="ppvalue_report btn btn-info">Профиль мощности</button> ';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-    html += '<div id="fixday-report-dialog"></div>';
+    html += '</div></div></div></div>';
     html += '<div id="report_content"></div>';
     $("#content").html(html);
 }

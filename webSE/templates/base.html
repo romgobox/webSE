@@ -27,8 +27,42 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/meters.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/reports-ui.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/reports.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/requests-ui.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/requests.js') }}"></script>
+<style type="text/css">
+  #waiting {
+    display: none;
+    position: fixed; 
+    top: 50%; 
+    padding:10px; 
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index:2;
+    overflow: auto;
+  }
+</style>
 </head>
 <body>
+<!-- Dialogs -->
+<!-- Meters dialogs -->
+<div id="wh_edit_dialog"></div>
+<div id="wh_delete_dialog"></div>
+<div id="wh_add_dialog"></div>
+<div id="ch_edit_dialog"></div>
+<div id="ch_delete_dialog"></div>
+<div id="ch_add_dialog"></div>
+<div id="obj_edit_dialog"></div>
+<div id="obj_delete_dialog"></div>
+<div id="obj_add_dialog"></div>
+<div id="status_dialog"></div>
+<!-- Reports dialogs -->
+<div id="fixday-report-dialog"></div>
+
+<!-- Requests dialogs -->
+<div id="request_by_channels_dialog"></div>
+
+<div id="waiting" style=""><img src="{{ url_for('static', filename='images/wait2.gif') }}"></div>
   <div class="container">
     <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -39,8 +73,9 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul id="main_menu" class="nav navbar-nav">
-              <li id="configurator"  class="active"><a href="/">Конфигурация</a></li>
+              <li id="configurator"><a href="#">Конфигурация</a></li>
               <li id="reports"><a href="#">Отчеты</a></li>
+              <li id="requests"><a href="#">Опросы</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
