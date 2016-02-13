@@ -81,40 +81,98 @@ function requestByChannelsDialog(meters) {
 // Requests Tables
 ////////////////////////////////////////////////////////////////////////////////
 function renderRequestTable(data) {
+    $("#request_content").html('');
     var data = data;
-    var htmlFixdayTable = '<h4>Зафиксированные показания: </h4>';
-    htmlFixdayTable += '<table id="fixday_values_table" class="table table-bordered table-hover">';
-    htmlFixdayTable += '<tr><th>Дата</th><th>Значение</th>';
-    htmlFixdayTable += '</table>';
-
-    var htmlPPValueTable = '<h4>Профиль мощности: </h4>';
-    htmlPPValueTable += '<table id="pp_values_table" class="table table-bordered table-hover">';
-    htmlPPValueTable += '<tr><th>Дата</th><th>Значение</th>';
-    htmlPPValueTable += '</table>';
-
-    $("#request_content").append(htmlFixdayTable);
-    $("#request_content").append(htmlPPValueTable);
-
-    var fixDayTable = $('#fixday_values_table');
-    var ppValueTable = $('#pp_values_table');
-
-    var fixDayHtml = '';
-    var ppValueHtml = '';
+    var meters = window.meters;
     for (var i in data) {
-        for (var date in data[i]['fixDay']) {
-            var value = data[i]['fixDay'][date];
-            fixDayHtml += '<tr>';
-            fixDayHtml += '<td>'+date+'</td><td>'+value+'</td>';
-            fixDayHtml += '</tr>';
-        }
-        for (var date in data[i]['ppValue']) {
-            var value = data[i]['ppValue'][date];
-            ppValueHtml += '<tr>';
-            ppValueHtml += '<td>'+date+'</td><td>'+value+'</td>';
-            ppValueHtml += '</tr>';
+        for (var j in data[i]) {
+
+            var meter = meters.returnMeter(data[i][j]['id']);
+            
+            var meterTable = '<table id="meter_table_'+meter.id+'" class="table table-bordered table-hover">';
+            meterTable += '<tr><th>'+meter['wh_desc']+' '+meter['wh_num']+'</th>';
+            meterTable += '<th>';
+            meterTable += '<button class="fixday_show_btn btn btn-primary btn-sm" wh_id="'+meter.id+'" >Зафиксированные показания</button>';
+            meterTable += '<button class="ppvalue_show_btn btn btn-primary btn-sm" wh_id="'+meter.id+'" >Профиль мощности</button>';
+            meterTable += '</th></tr></table>';
+
+            var htmlFixdayTable = '<table hidden id="fixday_values_table_'+meter.id+'" class="table table-bordered table-hover">';
+            htmlFixdayTable += '<tr><th>Дата</th><th>Значение</th></tr>';
+            htmlFixdayTable += '</table>';
+
+            var htmlPPValueTable = '<table hidden id="pp_values_table_'+meter.id+'" class="table table-bordered table-hover">';
+            htmlPPValueTable += '<tr><th>Дата</th><th>Значение</th></tr>';
+            htmlPPValueTable += '</table>';
+
+            $("#request_content").append(meterTable);
+            $("#request_content").append(htmlFixdayTable);
+            $("#request_content").append(htmlPPValueTable);
+    
+            var fixDayTable = $('#fixday_values_table_'+meter.id);
+            var ppValueTable = $('#pp_values_table_'+meter.id);
+
+            var fixDayHtml = '';
+            var ppValueHtml = '';
+
+            var ppv_dates = [];
+            for (var date in data[i][j]['ppValue']) {
+                ppv_dates.push(date);
+            }
+            var fd_dates = [];
+            for (var date in data[i][j]['fixDay']) {
+                fd_dates.push(date);
+            }
+
+            ppv_dates.sort(function(a,b){
+                var date1 = new Date(a.substr(0, 4), a.substr(5, 2)-1, a.substr(8, 2), a.substr(11, 2), a.substr(14, 2), a.substr(17, 2));
+                var date2 = new Date(b.substr(0, 4), b.substr(5, 2)-1, b.substr(8, 2), b.substr(11, 2), b.substr(14, 2), b.substr(17, 2));
+                return date1-date2;
+            });
+            fd_dates.sort(function(a,b){
+                var date1 = new Date(a.substr(0, 4), a.substr(5, 2)-1, a.substr(8, 2), a.substr(11, 2), a.substr(14, 2), a.substr(17, 2));
+                var date2 = new Date(b.substr(0, 4), b.substr(5, 2)-1, b.substr(8, 2), b.substr(11, 2), b.substr(14, 2), b.substr(17, 2));
+                return date1-date2;
+            });
+
+            for (var date in fd_dates) {
+                var value = data[i][j]['fixDay'][fd_dates[date]];
+                var date = fd_dates[date];
+                fixDayHtml += '<tr>';
+                fixDayHtml += '<td>'+date+'</td><td>'+value+'</td>';
+                fixDayHtml += '</tr>';
+            }
+
+            for (var date in ppv_dates) {
+                var value = data[i][j]['ppValue'][ppv_dates[date]];
+                var date = ppv_dates[date];
+                ppValueHtml += '<tr>';
+                ppValueHtml += '<td>'+date+'</td><td>'+value+'</td>';
+                ppValueHtml += '</tr>';
+            }
+
+            fixDayTable.append(fixDayHtml);
+            ppValueTable.append(ppValueHtml);
         }
     }
-    fixDayTable.append(fixDayHtml);
-    ppValueTable.append(ppValueHtml);
-    
+    $("#request_content").on('click', '.fixday_show_btn', function (e){
+        e.preventDefault();
+        var wh_id = $(this).attr('wh_id');
+        if ($("#fixday_values_table_"+wh_id).is(":hidden")) {
+            $("#fixday_values_table_"+wh_id).show();
+        }
+        else {
+            $("#fixday_values_table_"+wh_id).hide();
+        }
+    });
+
+    $("#request_content").on('click', '.ppvalue_show_btn', function (e){
+        e.preventDefault();
+        var wh_id = $(this).attr('wh_id');
+        if ($("#pp_values_table_"+wh_id).is(":hidden")) {
+            $("#pp_values_table_"+wh_id).show();
+        }
+        else {
+            $("#pp_values_table_"+wh_id).hide();
+        }
+    });
 }
