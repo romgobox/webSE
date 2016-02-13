@@ -8,6 +8,9 @@ $(document).ready(function() {
     meters.getProtocols();
     meters.getChannels();
     meters.getMeters();
+
+    // Рисуем интерфейс
+    renderMetersUI();
     // Рисуем таблицы объектов, протоколов, каналов, счетчиков
     meters.renderMetersTable();
     meters.renderChannelsTable();
@@ -23,12 +26,45 @@ function registerClick() {
     ////////////////////////////////////////////////////////////////////////////
     // Main menu
     ////////////////////////////////////////////////////////////////////////////
+    $("#main_menu").on('click', "#configurator", function (e){
+        e.preventDefault();
+        renderMetersUI();
+        meters.renderMetersTable();
+        meters.renderChannelsTable();
+        meters.renderObjectsTable();
+        registerClick();
+        // $("#configurator").toggleClass("active");
+        // $("#reports").removeClass("active");
+    });
+
     $("#main_menu").on('click', "#reports", function (e){
         e.preventDefault();
         renderReportsUI();
         registerClick();
-        $("#configurator").removeClass("active");
-        $("#reports").toggleClass("active");
+        // $("#configurator").removeClass("active");
+        // $("#reports").toggleClass("active");
+    });
+
+    $("#main_menu").on('click', "#requests", function (e){
+        e.preventDefault();
+        renderRequestsUI();
+        registerClick();
+        // $("#configurator").removeClass("active");
+        // $("#reports").toggleClass("active");
+    });
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Requests menu
+    ////////////////////////////////////////////////////////////////////////////
+    $("#requests_menu").on('click', ".channels_requests", function (e){
+        e.preventDefault();
+        requestByChannelsDialog(meters);
+        registerClick();
+    });
+
+    $("#select_object").on('change', function(e){
+        e.preventDefault();
+        metersSelectByObject(meters);
     });
 
     ////////////////////////////////////////////////////////////////////////////
