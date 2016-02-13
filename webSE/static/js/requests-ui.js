@@ -2,14 +2,11 @@
 // UI elements
 ////////////////////////////////////////////////////////////////////////////////
 function renderRequestsUI() {
-    html = '<div class="panel panel-default">';
-    html += '<div class="row">';
-    html += '<div class="col-md-12">';
-    html += '<div id="requests_menu" class="panel-body">';
-    html += '<button class="channels_requests btn btn-info">Опрос по каналам</button> ';
-    html += '</div></div></div></div>';
-    html += '<div id="request_content"></div>';
-    $("#content").html(html);
+    if ($("#requests_ui").is(":hidden")) {
+        $("#meters_ui").hide();
+        $("#reports_ui").hide();
+        $("#requests_ui").show();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Dialogs

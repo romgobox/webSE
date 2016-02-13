@@ -83,6 +83,102 @@
       <div id="content">
         {% block content %}
         {% endblock %}
+        <!-- Meters UI -->
+        <div id="meters_ui" hidden>
+            <div class="panel panel-default">
+                <div class="row">
+                  <div class="col-md-7">
+                    <div style="float:left" id="meters_menu" class="panel-body">
+                      <button class="add_wh btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить прибор учета</button>
+                      <button class="add_ch btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить канал опроса</button>
+                      <button href="#objects" class="add_obj btn btn-success"><span class="glyphicon glyphicon-plus"></span> Добавить объект учета</button>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                  </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#meters">Приборы учета</a></li>
+                <li><a data-toggle="tab" href="#channels">Каналы опроса</a></li>
+                <li><a data-toggle="tab" href="#objects">Объекты учета</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="meters" class="tab-pane fade in active">
+                  <table id="wh_table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Объект</th>
+                            <th>Описание</th>
+                            <th>Номер</th>
+                            <th>Адрес</th>
+                            <th>Канал</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    </table>
+                </div>
+                <div id="channels" class="tab-pane fade">
+                  <table id="ch_table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Описание</th>
+                            <th>IP адрес</th>
+                            <th>IP порт</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    </table>
+                </div>
+                <div id="objects" class="tab-pane fade">
+                  <table id="obj_table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Описание</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports UI -->
+        <div id="reports_ui" hidden>
+            <div class="panel panel-default">
+              <div class="row">
+                <div class="col-md-12">
+                  <div id="reports_menu" class="panel-body">
+                    <button class="fixday_report btn btn-info">Зафиксированные показания</button>
+                    <button class="fixday_diff_report btn btn-info">Расход за период</button>
+                    <button class="ppvalue_report btn btn-info">Профиль мощности</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="report_content"></div>
+        </div>
+
+        <!-- Requests UI -->
+        <div id="requests_ui" hidden>
+          <div class="panel panel-default">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="requests_menu" class="panel-body">
+                  <button class="channels_requests btn btn-info">Опрос по каналам</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="request_content"></div>
+        </div>
+        
       </div>
   </div> 
     
