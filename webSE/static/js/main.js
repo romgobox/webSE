@@ -55,8 +55,12 @@ function registerClick() {
     ////////////////////////////////////////////////////////////////////////////
     $("#requests_menu").on('click', ".channels_requests", function (e){
         e.preventDefault();
-        requestByChannelsDialog(meters);
-        registerClick();
+        requestByChannelsDialog(meters, false);
+    });
+
+    $("#requests_menu").on('click', ".channels_requests_queue", function (e){
+        e.preventDefault();
+        requestByChannelsDialog(meters, true);
     });
 
     ////////////////////////////////////////////////////////////////////////////
@@ -65,19 +69,16 @@ function registerClick() {
     $("#reports_menu").on('click', ".fixday_report", function (e){
         e.preventDefault();
         ReportByMeterIDDialog(meters, 1, 'dates_list');
-        registerClick();
     });
 
     $("#reports_menu").on('click', ".fixday_diff_report", function (e){
         e.preventDefault();
         ReportByMeterIDDialog(meters, 1, 'dates_diff');
-        registerClick();
     });
 
     $("#reports_menu").on('click', ".ppvalue_report", function (e){
         e.preventDefault();
         ReportByMeterIDDialog(meters, 2, 'dates_list');
-        registerClick();
     });
 
     ////////////////////////////////////////////////////////////////////////////

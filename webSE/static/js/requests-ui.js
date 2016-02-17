@@ -22,7 +22,8 @@ function metersSelectByObject(meters) {
     };
     $("#select_meter").html(wh_list);
 }
-function requestByChannelsDialog(meters) {
+function requestByChannelsDialog(meters, reply) {
+    var reply = reply || false;
     var meters = meters;
     var html = '';
     html += '<table id="channels_check" class="table table-bordered table-hover">';
@@ -44,6 +45,7 @@ function requestByChannelsDialog(meters) {
         });
         result['channels'] = channels;
         result['alg_type'] = 'full';
+        result['reply'] = reply;
         return result;
     }
     $("#request_by_channels_dialog").html(html);
@@ -66,6 +68,7 @@ function requestByChannelsDialog(meters) {
                         getRequestByChannel(result);
                         $(this).dialog("close");
                         $('#waiting').show();
+                        showStatusDialog('info', 'Задание на опрос отправлено в очередь', 'Информация');
                     }
                     else {
                         alert("Нужно выбрать хотя бы один канал");
