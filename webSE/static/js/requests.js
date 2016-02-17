@@ -2,7 +2,8 @@
 // Requests handlers
 ////////////////////////////////////////////////////////////////////////////////
 
-function getRequestByChannel(data) {
+function getRequestByChannel(data, reply) {
+    var reply = data['reply'] || false;
     var data = data;
     $.ajax({
         url: "/requests/channels",
@@ -13,7 +14,12 @@ function getRequestByChannel(data) {
         contentType: "application/json",
         success: function (data) {
                     $('#waiting').hide();
-                    renderRequestTable(data);
+                    if (reply) {
+                        renderRequestTable(data['result']);
+                    }
+                    else {
+                        showStatusDialog('info', data['message'], 'Информация');
+                    }
                 }
     });
 }
