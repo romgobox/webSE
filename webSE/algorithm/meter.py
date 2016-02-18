@@ -94,8 +94,6 @@ class Meter(object):
                     logging.debug(sql)
                 except Exception, e:
                     logging.error('Не удалось сохранить получасовые значения. Причина: %s', e)
-            else:
-                del self.ppValue[date]
         con.commit()
 
     def getppValueMap(self, depth):
