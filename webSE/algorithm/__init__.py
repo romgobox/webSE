@@ -6,7 +6,7 @@ import random
 import gevent.monkey
 from flask import request
 from webSE import app
-from SE30x.algorithm import Algorithm
+from algorithm import Algorithm
 from kombu import Connection, Exchange, Queue, Producer, Consumer
 gevent.monkey.patch_socket()
 logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d]# %(levelname)-4s [%(asctime)s] %(message)s', level = logging.DEBUG)
