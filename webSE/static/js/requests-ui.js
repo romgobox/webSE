@@ -158,7 +158,7 @@ function renderRequestTable(data) {
         }
     }
     $("#request_content").on('click', '.fixday_show_btn', function (e){
-        e.preventDefault();
+        e.stopImmediatePropagation();
         var wh_id = $(this).attr('wh_id');
         if ($("#fixday_values_table_"+wh_id).is(":hidden")) {
             $("#fixday_values_table_"+wh_id).show();
@@ -166,10 +166,11 @@ function renderRequestTable(data) {
         else {
             $("#fixday_values_table_"+wh_id).hide();
         }
+        // $(this).off('click');
     });
 
     $("#request_content").on('click', '.ppvalue_show_btn', function (e){
-        e.preventDefault();
+        e.stopImmediatePropagation();
         var wh_id = $(this).attr('wh_id');
         if ($("#pp_values_table_"+wh_id).is(":hidden")) {
             $("#pp_values_table_"+wh_id).show();
@@ -177,5 +178,6 @@ function renderRequestTable(data) {
         else {
             $("#pp_values_table_"+wh_id).hide();
         }
+        // $(this).off('click');
     });
 }
