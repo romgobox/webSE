@@ -9,7 +9,7 @@ from webSE.api.objects import ObjectsAPI
 from webSE.api.protocols import ProtocolsAPI
 from webSE.api.meters_type import MetersTypeAPI
 from webSE.api.channels_type import ChannelsTypeAPI
-
+from webSE.api.channels_status import ChannelsStatusAPI
 app = Flask(__name__)
 
 @app.route('/')
@@ -34,6 +34,10 @@ app.add_url_rule('/channels/<int:channel_id>', view_func=channels_view, methods=
 
 channels_type_view = ChannelsTypeAPI.as_view('channels_type_api')
 app.add_url_rule('/channels_type', defaults={'channels_type_id': None}, view_func=channels_type_view, methods=['GET',])
+
+channels_status_view = ChannelsStatusAPI.as_view('channels_status_api')
+app.add_url_rule('/channels_status', defaults={'channel_id': None}, view_func=channels_status_view, methods=['GET'])
+app.add_url_rule('/channels_status/<int:channel_id>', view_func=channels_status_view, methods=['GET', 'PUT'])
 
 objects_view = ObjectsAPI.as_view('objects_api')
 app.add_url_rule('/objects', defaults={'object_id': None}, view_func=objects_view, methods=['GET',])
