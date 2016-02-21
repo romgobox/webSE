@@ -2,6 +2,8 @@
 *.db
 app.wsgi
 webse.conf
+*.sql
+*.TODO
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
