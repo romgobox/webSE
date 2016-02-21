@@ -11,9 +11,11 @@ def get_channels():
         ch.ch_ip, 
         ch.ch_port,
         ch.ch_settings,
-        ch.is_activ
-    FROM
-        channels ch
+        ch.is_active,
+        ct.id ch_type_id,
+        ct.type ch_type
+    FROM channels ch
+    JOIN channels_type ct ON ch.type_id=ct.id;
     '''
     cur, con = get_db()
     cur.execute(channels_sql)

@@ -8,7 +8,7 @@ def get_db():
     con = MySQLdb.connect(host='localhost',
                             user='webse',
                             passwd='webse',
-                            db='webse',
+                            db='webamr',
                             cursorclass=MySQLdb.cursors.DictCursor)
     cur = con.cursor()
 
