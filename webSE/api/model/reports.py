@@ -10,7 +10,7 @@ def get_report_by_meter_id(data):
         datetime_value, 
         value
     FROM
-        webse.values
+        meters_values
     WHERE
         meter_id={meter_id} 
         AND param_num={param_num} 
@@ -38,7 +38,7 @@ def get_report_diff_by_meter_id(data):
         datetime_value, 
         value
     FROM
-        webse.values
+        meters_values
     WHERE
         meter_id={meter_id} 
         AND param_num={param_num} 
@@ -53,7 +53,7 @@ def get_report_diff_by_meter_id(data):
         datetime_value, 
         value
     FROM
-        webse.values
+        meters_values
     WHERE
         meter_id={meter_id} 
         AND param_num={param_num} 

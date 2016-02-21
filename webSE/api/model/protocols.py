@@ -7,9 +7,7 @@ def get_protocols():
     protocols_sql = '''
     SELECT 
         pr.id, 
-        pr.pr_name, 
-        pr.pr_desc, 
-        pr.pr_settings
+        pr.type
     FROM
         protocols pr
     '''
@@ -19,7 +17,6 @@ def get_protocols():
     protocols_list = []
     for row in protocols:
         protocol = dict(row)
-        protocol['pr_settings'] = json.loads(protocol['pr_settings'])
         protocols_list.append(protocol)
     return protocols_list
     

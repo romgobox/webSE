@@ -24,7 +24,6 @@ class ObjectsAPI(MethodView):
         return json.dumps(response)
 
     def put(self, object_id):
-        # import pudb; pu.db
         id = int(object_id)
         data = {}
         data['obj_desc'] = request.json['obj_desc']
