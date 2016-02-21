@@ -5,7 +5,6 @@ import logging
 import random
 import gevent.monkey
 from flask import request
-from webSE import app
 from algorithm import Algorithm
 from kombu import Connection, Exchange, Queue, Producer, Consumer
 gevent.monkey.patch_socket()

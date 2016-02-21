@@ -1,7 +1,9 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 import json
+import datetime
 from webSE.api.model import get_db
+from webSE.algorithm.channels_status import insertChannelStatus, updateChannelStatus
 
 def get_channels():
     channels_sql = '''
@@ -44,12 +46,14 @@ def add_channel(data):
             ch_settings=json.dumps(data['ch_settings']),
             is_active=data['is_active']) 
 
+
     response = {'status': u'Неопределено'}
     try:
         cur, con = get_db()
         cur.execute(channel_sql)
         con.commit()
         data['id'] = cur.lastrowid
+        insertChannelStatus(cur, con, data['id'], -1)
         response = data
         response['status'] = u'Добавлен новый канал опроса'
     except Exception, e:
@@ -81,6 +85,7 @@ def update_channel(chID, data):
         cur, con = get_db()
         cur.execute(channel_sql)
         con.commit()
+        updateChannelStatus(cur, con, chID, 0)
         response['status'] = u'Сохранено'
     except Exception, e:
         response['status'] = u'Не сохранено. Причина: {e}'.format(e=e)
@@ -91,10 +96,16 @@ def del_channel(id):
     DELETE FROM channels
     WHERE id={id}
     '''.format(id=id)
+
+    channel_status_sql = u'''
+    DELETE FROM channels_status
+    WHERE channel_id={id}
+    '''.format(id=id)
     response = {'status': u'Неопределено'}
     try:
         cur, con = get_db()
         cur.execute(channel_sql)
+        cur.execute(channel_status_sql)
         con.commit()
         response['status'] = u'Удален канал опроса'
     except Exception, e:
