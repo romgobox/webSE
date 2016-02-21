@@ -7,6 +7,7 @@ def get_objects():
     objects_sql = '''
     SELECT
         obj.id, 
+        obj.higher, 
         obj.obj_desc
     FROM
         objects obj
@@ -25,8 +26,10 @@ def add_object(data):
     INSERT INTO objects 
     VALUES(
         Null, 
+        {higher},
         '{obj_desc}') 
-    '''.format(obj_desc=data['obj_desc']) 
+    '''.format(obj_desc=data['obj_desc'],
+                higher=data['higher']) 
 
     response = {'status': u'Неопределено'}
     try:

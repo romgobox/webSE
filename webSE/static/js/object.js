@@ -4,6 +4,7 @@
 
 var whObject = function(data) {
     this.id = data['id'];
+    this.higher = data['higher'];
     this.obj_desc = data['obj_desc'];
 };
 
@@ -33,5 +34,6 @@ whObject.prototype.saveParams = function (params, meters) {
 
 whObject.prototype.updateData = function (data, meters) {
     this.id = data['id'];
+    this.higher = data['higher'];
     this.obj_desc = data['obj_desc'];
 };

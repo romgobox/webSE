@@ -19,14 +19,15 @@ class ObjectsAPI(MethodView):
 
     def post(self):
         data = {}
+        data['higher'] = request.json['higher']
         data['obj_desc'] = request.json['obj_desc']
         response = add_object(data)
         return json.dumps(response)
 
     def put(self, object_id):
-        # import pudb; pu.db
         id = int(object_id)
         data = {}
+        data['higher'] = request.json['higher']
         data['obj_desc'] = request.json['obj_desc']
         response = update_object(id, data)
         return json.dumps(response)

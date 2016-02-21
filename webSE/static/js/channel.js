@@ -2,13 +2,14 @@
 // Channel
 ////////////////////////////////////////////////////////////////////////////////
 
-var Channel = function(data) {
+var Channel = function(data, meters) {
     this.id = data['id'];
     this.ch_desc = data['ch_desc'];
     this.ch_ip = data['ch_ip'];
+    this.type_id = typeof meters.channels_type[data['type_id']] == 'undefined' ? {} : meters.channels_type[data['type_id']];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
-    this.is_activ = data['is_activ'];
+    this.is_active = data['is_active'];
 };
 
 Channel.prototype.renderChannelTR = function() {
@@ -39,8 +40,19 @@ Channel.prototype.updateData = function (data, meters) {
     this.id = data['id'];
     this.ch_desc = data['ch_desc'];
     this.ch_ip = data['ch_ip'];
+    this.type_id = typeof meters.channels_type[data['type_id']] == 'undefined' ? {} : meters.channels_type[data['type_id']];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
-    this.is_activ = data['is_activ'];
+    this.is_active = data['is_active'];
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+// ChannelType
+////////////////////////////////////////////////////////////////////////////////
+
+var ChannelType = function(data) {
+    this.id = data['id'];
+    this.type = data['type'];
+    this.short_type = data['short_type'];
+};

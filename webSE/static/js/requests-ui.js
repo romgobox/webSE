@@ -29,7 +29,7 @@ function requestByChannelsDialog(meters, reply) {
     html += '<table id="channels_check" class="table table-bordered table-hover">';
     for (var i in meters.channels) {
         var channel = meters.channels[i]
-        if (channel.is_activ == 1) {
+        if (channel.is_active == 1) {
             html += '<tr>';
             html += '<td><input type="checkbox" value='+channel['id']+'></td>'
             html += '<td>'+channel['ch_desc']+' [ '+channel['ch_ip']+':'+channel['ch_port']+' ]</td>';
@@ -141,7 +141,13 @@ function renderRequestTable(data) {
                 var value = data[i][j]['fixDay'][fd_dates[date]];
                 var date = fd_dates[date];
                 fixDayHtml += '<tr>';
-                fixDayHtml += '<td>'+date+'</td><td>'+value+'</td>';
+                fixDayHtml += '<td>'+date+'</td><td>';
+                fixDayHtml += '<ul>';
+                fixDayHtml += '<li>Сумма: '+value['Sum']+'</li>';
+                fixDayHtml += '<li>T1: '+value['T1']+'</li>';
+                fixDayHtml += '<li>T2: '+value['T2']+'</li>';
+                fixDayHtml += '</ul>';
+                fixDayHtml += '</td>';
                 fixDayHtml += '</tr>';
             }
 

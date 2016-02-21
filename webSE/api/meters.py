@@ -19,28 +19,36 @@ class MetersAPI(MethodView):
 
     def post(self):
         data = {}
-        data['object_id'] = int(request.json['object_id'])
-        data['wh_desc'] = request.json['wh_desc']
-        data['protocol_id'] = int(request.json['protocol_id'])
-        data['wh_num'] = request.json['wh_num']
+        data['type_id'] = int(request.json['type_id'])
         data['wh_adr'] = request.json['wh_adr']
+        data['wh_num'] = request.json['wh_num']
         data['wh_pass'] = request.json['wh_pass']
+        data['wh_desc'] = request.json['wh_desc']
+        data['wh_KI'] = int(request.json['wh_KI'])
+        data['wh_KU'] = int(request.json['wh_KU'])
+        data['wh_IMPL'] = int(request.json['wh_IMPL'])
         data['wh_settings'] = request.json['wh_settings']
+        data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])
+        data['is_active'] = int(request.json['is_active'])
         response = add_meter(data)
         return json.dumps(response)
 
     def put(self, meter_id):
         id = int(meter_id)
         data = {}
-        data['object_id'] = int(request.json['object_id'])
-        data['wh_desc'] = request.json['wh_desc']
-        data['protocol_id'] = int(request.json['protocol_id'])
-        data['wh_num'] = request.json['wh_num']
+        data['type_id'] = int(request.json['type_id'])
         data['wh_adr'] = request.json['wh_adr']
+        data['wh_num'] = request.json['wh_num']
         data['wh_pass'] = request.json['wh_pass']
+        data['wh_desc'] = request.json['wh_desc']
+        data['wh_KI'] = int(request.json['wh_KI'])
+        data['wh_KU'] = int(request.json['wh_KU'])
+        data['wh_IMPL'] = int(request.json['wh_IMPL'])
         data['wh_settings'] = request.json['wh_settings']
+        data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])
+        data['is_active'] = int(request.json['is_active'])
         response = update_meter(id, data)
         return json.dumps(response)
 
