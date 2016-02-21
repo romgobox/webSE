@@ -7,14 +7,18 @@ def get_meters():
     meters_sql = '''
     SELECT 
         wh.id, 
+        wh.type_id, 
         wh.wh_adr, 
         wh.wh_num, 
         wh.wh_pass, 
-        wh.object_id,
         wh.wh_desc, 
+        wh.wh_KI, 
+        wh.wh_KU, 
+        wh.wh_IMPL, 
         wh.wh_settings, 
-        wh.protocol_id, 
-        wh.channel_id
+        wh.object_id,
+        wh.channel_id,
+        wh.is_active
     FROM 
         meters wh
     ORDER BY wh.object_id
@@ -34,23 +38,31 @@ def add_meter(data):
     INSERT INTO meters 
     VALUES(
         Null,
+        {type_id}, 
         '{wh_adr}', 
         '{wh_num}',
         '{wh_pass}',  
-        {object_id}, 
         '{wh_desc}', 
+        {wh_KI}, 
+        {wh_KU}, 
+        {wh_IMPL}, 
         '{wh_settings}', 
-        {protocol_id}, 
-        {channel_id})
+        {object_id}, 
+        {channel_id}, 
+        {is_active})
     '''.format(
+            type_id=data['type_id'],
             wh_adr=data['wh_adr'], 
             wh_num=data['wh_num'], 
             wh_pass=data['wh_pass'], 
-            object_id=data['object_id'],
-            wh_desc=data['wh_desc'], 
+            wh_desc=data['wh_desc'],
+            wh_KI=data['wh_KI'], 
+            wh_KU=data['wh_KU'], 
+            wh_IMPL=data['wh_IMPL'],  
             wh_settings=json.dumps(data['wh_settings']), 
-            protocol_id=data['protocol_id'],
-            channel_id=data['channel_id'])
+            object_id=data['object_id'],
+            channel_id=data['channel_id'], 
+            is_active=data['is_active'])
 
     response = {'status': u'Неопределено'}
     try:
@@ -68,24 +80,32 @@ def update_meter(whID, data):
     meter_sql = u'''
     UPDATE meters
     SET 
+        type_id={type_id},
         wh_adr='{wh_adr}', 
         wh_num='{wh_num}', 
         wh_pass='{wh_pass}', 
-        object_id={object_id},
-        wh_desc='{wh_desc}', 
+        wh_desc='{wh_desc}',
+        wh_KI={wh_KI}, 
+        wh_KU={wh_KU}, 
+        wh_IMPL={wh_IMPL}, 
         wh_settings='{wh_settings}', 
-        protocol_id={protocol_id},
-        channel_id={channel_id}
+        object_id={object_id},
+        channel_id={channel_id}, 
+        is_active={is_active}
     WHERE id={id}
     '''.format(
+            type_id=data['type_id'],
             wh_adr=data['wh_adr'], 
             wh_num=data['wh_num'], 
             wh_pass=data['wh_pass'], 
-            object_id=data['object_id'],
-            wh_desc=data['wh_desc'], 
+            wh_desc=data['wh_desc'],
+            wh_KI=data['wh_KI'], 
+            wh_KU=data['wh_KU'], 
+            wh_IMPL=data['wh_IMPL'],  
             wh_settings=json.dumps(data['wh_settings']), 
-            protocol_id=data['protocol_id'],
-            channel_id=data['channel_id'],
+            object_id=data['object_id'],
+            channel_id=data['channel_id'], 
+            is_active=data['is_active'],
             id=whID)
 
     response = {'status': u'Неопределено'}

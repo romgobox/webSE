@@ -21,9 +21,10 @@ class ChannelsAPI(MethodView):
         data = {}
         data['ch_desc'] = request.json['ch_desc']
         data['ch_ip'] = request.json['ch_ip']
+        data['type_id'] = int(request.json['type_id'])
         data['ch_port'] = int(request.json['ch_port'])
         data['ch_settings'] = request.json['ch_settings']
-        data['is_activ'] = int(request.json['is_activ'])
+        data['is_active'] = int(request.json['is_active'])
         response = add_channel(data)
         return json.dumps(response)
 
@@ -32,9 +33,10 @@ class ChannelsAPI(MethodView):
         data = {}
         data['ch_desc'] = request.json['ch_desc']
         data['ch_ip'] = request.json['ch_ip']
+        data['type_id'] = int(request.json['type_id'])
         data['ch_port'] = int(request.json['ch_port'])
         data['ch_settings'] = request.json['ch_settings']
-        data['is_activ'] = int(request.json['is_activ'])
+        data['is_active'] = int(request.json['is_active'])
         response = update_channel(id, data)
         return json.dumps(response)
 

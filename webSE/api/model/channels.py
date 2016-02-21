@@ -9,13 +9,11 @@ def get_channels():
         ch.id, 
         ch.ch_desc, 
         ch.ch_ip, 
+        ch.type_id, 
         ch.ch_port,
         ch.ch_settings,
         ch.is_active,
-        ct.id ch_type_id,
-        ct.type ch_type
-    FROM channels ch
-    JOIN channels_type ct ON ch.type_id=ct.id;
+    FROM channels ch;
     '''
     cur, con = get_db()
     cur.execute(channels_sql)
@@ -33,16 +31,18 @@ def add_channel(data):
     VALUES(
         Null, 
         '{ch_desc}', 
-        '{ch_ip}', 
+        '{ch_ip}',
+        {type_id}, 
         {ch_port},  
         '{ch_settings}',
-        {is_activ}) 
+        {is_active}) 
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
+            type_id=data['type_id'],
             ch_port=data['ch_port'], 
             ch_settings=json.dumps(data['ch_settings']),
-            is_activ=data['is_activ']) 
+            is_active=data['is_active']) 
 
     response = {'status': u'Неопределено'}
     try:
@@ -62,16 +62,18 @@ def update_channel(chID, data):
     SET 
         ch_desc='{ch_desc}', 
         ch_ip='{ch_ip}', 
+        type_id={type_id},
         ch_port='{ch_port}', 
         ch_settings='{ch_settings}',
-        is_activ={is_activ}
+        is_active={is_active}
     WHERE id={id}
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
+            type_id=data['type_id'],
             ch_port=data['ch_port'], 
             ch_settings=json.dumps(data['ch_settings']),
-            is_activ=data['is_activ'],
+            is_active=data['is_active'],
             id=chID)
 
     response = {'status': u'Неопределено'}

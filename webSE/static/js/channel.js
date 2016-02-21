@@ -6,9 +6,11 @@ var Channel = function(data) {
     this.id = data['id'];
     this.ch_desc = data['ch_desc'];
     this.ch_ip = data['ch_ip'];
+    this.type_id = data['type_id'];
+    this.ch_type = data['ch_type'];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
-    this.is_activ = data['is_activ'];
+    this.is_active = data['is_active'];
 };
 
 Channel.prototype.renderChannelTR = function() {
@@ -39,6 +41,8 @@ Channel.prototype.updateData = function (data, meters) {
     this.id = data['id'];
     this.ch_desc = data['ch_desc'];
     this.ch_ip = data['ch_ip'];
+    this.type_id = data['type_id'];
+    this.ch_type = data['ch_type'];
     this.ch_port = data['ch_port'];
     this.ch_settings = data['ch_settings'];
     this.is_activ = data['is_activ'];
