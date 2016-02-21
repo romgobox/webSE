@@ -6,8 +6,10 @@ var Meters = function() {
     this.objects = {};
     this.protocols = {};
     this.channels = {};
+    this.channels_type = {};
     // this.meters = {}
     this.meters = [];
+    this.meters_type = {};
 };
 
 Meters.prototype.addObject = function(object) {
@@ -22,6 +24,10 @@ Meters.prototype.addChannel = function(channel) {
     this.channels[channel.id] = channel;
 };
 
+Meters.prototype.addChannelType = function(channel_type) {
+    this.channels_type[channel_type.id] = channel_type;
+};
+
 Meters.prototype.addMeter = function(meter) {
     // var id = meter.id;
     // this.meters[id] = meter;
@@ -29,6 +35,10 @@ Meters.prototype.addMeter = function(meter) {
     this.meters.sort(function(a,b) {
         return parseInt(a.object_id.id) - parseInt(b.object_id.id);
     });
+};
+
+Meters.prototype.addMeterType = function(meter_type) {
+    this.meters_type[meter_type.id] = meter_type;
 };
 
 Meters.prototype.getObjects = function() {
@@ -63,6 +73,22 @@ Meters.prototype.getProtocols = function() {
     });
 };
 
+Meters.prototype.getChannelsType = function() {
+    var self = this;
+    $.ajax({
+        url: "/channels_type",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addChannelType(new ChannelType(item));
+                    });
+                }
+    });
+};
+
 Meters.prototype.getChannels = function() {
     var self = this;
     $.ajax({
@@ -73,7 +99,7 @@ Meters.prototype.getChannels = function() {
         contentType: "application/json",
         success: function (data) {
                     $.each(data, function(index, item) {
-                        self.addChannel(new Channel(item));
+                        self.addChannel(new Channel(item, self));
                     });
                 }
     });
@@ -91,6 +117,23 @@ Meters.prototype.getMeters = function() {
         success: function (data) {
                     $.each(data, function(index, item) {
                         self.addMeter(new Meter(item, self));
+                    });
+                }
+    });
+};
+
+Meters.prototype.getMetersType = function() {
+    var self = this;
+    var meters = this;
+    $.ajax({
+        url: "/meters_type",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        self.addMeterType(new MeterType(item, self));
                     });
                 }
     });

@@ -6,7 +6,9 @@ $(document).ready(function() {
     // Запрашиваем объекты, протоколы, каналы, счетчики
     meters.getObjects();
     meters.getProtocols();
+    meters.getChannelsType();
     meters.getChannels();
+    meters.getMetersType();
     meters.getMeters();
 
     // Рисуем интерфейс
