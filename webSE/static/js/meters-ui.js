@@ -178,6 +178,7 @@ function editMeterDialog(meter, meters) {
     html += '</table>';
     function collectValues(tableID) {
         var result = {};
+        result['id'] = self.id;
         result['object_id'] = $(tableID).find("#object_id").val();
         result['wh_desc'] = $(tableID).find("#wh_desc").val();
         result['type_id'] = $(tableID).find("#type_id").val();
@@ -550,7 +551,7 @@ function delObjectDialog(object, meters) {
 ////////////////////////////////////////////////////////////////////////////////
 function meterTR(meter) {
     var html = '';
-    html += '<tr id="wh_'+meter.id+'"><td width="50">'+meter.id+'</td>';
+    html += '<tr id="tr_wh_'+meter.id+'"><td width="50">'+meter.id+'</td>';
     html += '<td id="object_id">'+meter.object_id['obj_desc']+'</td>';
     html += '<td id="wh_desc">'+meter.wh_desc+'</td>';
     html += '<td id="type_id">'+meter.type_id['type']+'</td>';

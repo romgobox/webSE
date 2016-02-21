@@ -48,7 +48,7 @@ Meter.prototype.saveParams = function (params, meters) {
         success: function(data){
             self.updateData(params, meters);
             var html = self.renderMeterTR();
-            $("#wh_"+self.id).replaceWith(html);
+            $("#tr_wh_"+self.id).replaceWith(html);
             showStatusDialog('info', data['status'], 'Изменен прибор учета');
         }
     });

@@ -66,7 +66,7 @@ class Meter(object):
                 now = datetime.now()
                 datercv = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
                 sql = '''
-                INSERT INTO webse.values 
+                INSERT INTO meters_values 
                 VALUES(Null, {id}, 1, '{datercv}', '{dateval}', {value})
                 '''.format(id=self.id, datercv=datercv, dateval=dateval, value=value['Sum'])
                 try:
@@ -86,7 +86,7 @@ class Meter(object):
                 now = datetime.now()
                 datercv = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
                 sql = '''
-                INSERT INTO webse.values 
+                INSERT INTO meters_values 
                 VALUES(Null, {id}, 2, '{datercv}', '{dateval}', {value})
                 '''.format(id=self.id, datercv=datercv, dateval=dateval, value=value)
                 try:
@@ -102,7 +102,7 @@ class Meter(object):
         for date in list(self.ppValueMap):
             sql = '''
             SELECT COUNT(datetime_value) count
-            FROM webse.values
+            FROM meters_values
             WHERE
                 meter_id={id} AND
                 datetime_value='{date}' AND
@@ -125,7 +125,7 @@ class Meter(object):
             datevalNextDay = datetime.strftime(datePnextDay, '%Y-%m-%d %H:%M:%S')
             sql = '''
             SELECT COUNT(datetime_value) count
-            FROM webse.values
+            FROM meters_values
             WHERE
                 meter_id={id} AND
                 param_num={param_num} AND
@@ -148,7 +148,7 @@ class Meter(object):
             dateval = datetime.strftime(dateP, '%Y-%m-%d %H:%M:%S')
             sql = '''
             SELECT COUNT(datetime_value) count
-            FROM webse.values
+            FROM meters_values
             WHERE
                 meter_id={id} AND
                 datetime_value='{date}' AND

@@ -60,9 +60,15 @@ class Algorithm(object):
         channel = channel or self.getChannel(ch_id)
         ch_id = ch_id or channel.id
         meters_sql = '''
-            SELECT wh.id, wh.wh_adr, wh.wh_num, wh.wh_pass, wh.wh_settings, pr.pr_name
-            FROM meters wh, protocols pr
-            WHERE wh.channel_id={ch_id} AND wh.protocol_id=pr.id
+            SELECT 
+                wh.id, 
+                wh.wh_adr, 
+                wh.wh_num, 
+                wh.wh_pass, 
+                wh.wh_settings, 
+                pr.short_type pr_name
+            FROM meters wh, meters_type mt, protocols pr
+            WHERE wh.channel_id={ch_id} AND wh.type_id=mt.id AND mt.protocol_id=pr.id;
             '''.format(ch_id=ch_id)
 
         cur, con = get_db()
@@ -84,9 +90,13 @@ class Algorithm(object):
 
     def getChannel(self, ch_id):
         channel_sql = '''
-            SELECT id, ch_ip, ch_port 
-            FROM channels
-            WHERE id={ch_id} AND is_activ=1
+            SELECT 
+                ch.id, 
+                ch.ch_ip, 
+                ch.ch_port,
+                ct.short_type 
+            FROM channels ch, channels_type ct
+            WHERE ch.id={ch_id} AND ch.is_active=1 AND ch.type_id=ct.id
             '''.format(ch_id=ch_id)
         cur, con = get_db()
         cur.execute(channel_sql)
