@@ -594,13 +594,8 @@ function channelStatusTR(channel) {
     html += '<td id="ch_type">'+channel.type_id['type']+'</td>';
     html += '<td id="status_datetime">'+channel.status_datetime+'</td>';
     html += '<td id="status_string">'+channel.status_string+'</td>';
-    
     if (channel.status_code==1 || channel.status_code==2 || channel.status_code==3) {
-        html += '<td align="center"><div id="channel_processing"><img src="'+meters.staticUrl+'images/285.gif"></div></td>';
-        // $('#channel_processing').show();
-    }
-    else {
-        // $('#channel_processing').hide();
+        html += '<td align="center"><div id="channel_processing"><img src="'+meters.staticUrl+'images/channel_status_processing.gif"></div></td>';
     }
     html += '</tr>';
     return html;
