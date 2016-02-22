@@ -38,14 +38,15 @@ class Algorithm(object):
 
     def fullAlgorithm(self):
         for channel, meters in self.metersMap.items():
+            update_channel_status(channel_id=channel.id, status_code=1)
             try:
                 channel.connect()
-                update_channel_status(channel_id=channel.id, status_code=1)
+                update_channel_status(channel_id=channel.id, status_code=2)
             except:
-                update_channel_status(channel_id=channel.id, status_code=4)
+                update_channel_status(channel_id=channel.id, status_code=5)
                 break
             for meter in meters:
-                update_channel_status(channel_id=channel.id, status_code=2)
+                update_channel_status(channel_id=channel.id, status_code=3)
                 params = meter.parameters
                 if meter.authCheckNum():
                     if params.get('fixDay'):
@@ -59,7 +60,7 @@ class Algorithm(object):
                         meter.getPPValues(dates)
                 meter.logOut()
             channel.terminate()
-            update_channel_status(channel_id=channel.id, status_code=3)
+            update_channel_status(channel_id=channel.id, status_code=4)
 
     def getMetersByChannel(self, ch_id=None, channel=None):
         channel = channel or self.getChannel(ch_id)

@@ -588,11 +588,21 @@ function channelTR(channel) {
 
 function channelStatusTR(channel) {
     var html = '';
+    var meters = window.meters;
     html += '<tr id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
     html += '<td id="ch_desc">'+channel.ch_desc+'</td>';
     html += '<td id="ch_type">'+channel.type_id['type']+'</td>';
     html += '<td id="status_datetime">'+channel.status_datetime+'</td>';
-    html += '<td id="status_string">'+channel.status_string+'</td></tr>';
+    html += '<td id="status_string">'+channel.status_string+'</td>';
+    
+    if (channel.status_code==1 || channel.status_code==2 || channel.status_code==3) {
+        html += '<td align="center"><div id="channel_processing"><img src="'+meters.staticUrl+'images/285.gif"></div></td>';
+        // $('#channel_processing').show();
+    }
+    else {
+        // $('#channel_processing').hide();
+    }
+    html += '</tr>';
     return html;
 }
 
