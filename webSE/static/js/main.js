@@ -3,9 +3,7 @@ $(document).ready(function() {
     // Инициализириуем глобальный объект
     var meters = new Meters();
     window.meters = meters;
-    // var staticUrl = "{{ url_for('static', filename='images/wait2.gif') }}";
     window.meters.staticUrl = staticUrl;
-    // Запрашиваем объекты, протоколы, каналы, счетчики
     meters.getObjects();
     meters.getProtocols();
     meters.getChannelsType();
@@ -69,13 +67,10 @@ function registerClick() {
     });
 
     $("#channels_status").on('click', ".channels_status_refresh", function (e){
-        // e.preventDefault();
         e.stopImmediatePropagation();
-        // meters.getChannelsStatus();
         var meters = window.meters;
         if ($("#channels_status .channels_status_refresh").html() == 'Вкл. автообновление') {
             meters.channelStatusRefresh = setInterval(function() { meters.getChannelsStatus() }, 3000);
-            // meters.getChannelsStatus();
             $("#channels_status .channels_status_refresh").html("Выкл. автообновление");
         }
         else {
