@@ -89,6 +89,26 @@ Meters.prototype.getChannelsType = function() {
     });
 };
 
+Meters.prototype.getChannelsStatus = function() {
+    var self = this;
+    $.ajax({
+        url: "/channels_status",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    $.each(data, function(index, item) {
+                        var channel = self.returnChannel(item['channel_id']);
+                        channel['status_code'] = item['status_code'];
+                        channel['status_datetime'] = item['status_datetime'];
+                        channel['status_string'] = item['status_string'];
+                    });
+                    self.renderChannelsStatusTable();
+                }
+    });
+};
+
 Meters.prototype.getChannels = function() {
     var self = this;
     $.ajax({
@@ -266,6 +286,15 @@ Meters.prototype.renderChannelsTable = function() {
         html += this.channels[m].renderChannelTR();
     };
     $("#ch_table tbody").html(html);
+    return html;
+};
+
+Meters.prototype.renderChannelsStatusTable = function() {
+    var html = '';    
+    for (var m in this.channels) {
+        html += this.channels[m].renderChannelStatusTR();
+    };
+    $("#channels_status_table tbody").html(html);
     return html;
 };
 

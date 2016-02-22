@@ -16,6 +16,10 @@ Channel.prototype.renderChannelTR = function() {
     return channelTR(this);
 };
 
+Channel.prototype.renderChannelStatusTR = function() {
+    return channelStatusTR(this);
+};
+
 Channel.prototype.saveParams = function (params, meters) {
     var self = this;
     var meters = meters;

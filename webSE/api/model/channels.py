@@ -3,7 +3,7 @@
 import json
 import datetime
 from webSE.api.model import get_db
-from webSE.algorithm.channels_status import insertChannelStatus, updateChannelStatus
+from webSE.api.model.channels_status import insert_channel_status, update_channel_status
 
 def get_channels():
     channels_sql = '''
@@ -53,7 +53,7 @@ def add_channel(data):
         cur.execute(channel_sql)
         con.commit()
         data['id'] = cur.lastrowid
-        insertChannelStatus(cur, con, data['id'], -1)
+        insert_channel_status(channel_id=data['id'], status_code=-1, cur=cur, con=con)
         response = data
         response['status'] = u'Добавлен новый канал опроса'
     except Exception, e:
@@ -85,7 +85,7 @@ def update_channel(chID, data):
         cur, con = get_db()
         cur.execute(channel_sql)
         con.commit()
-        updateChannelStatus(cur, con, chID, 0)
+        update_channel_status(channel_id=chID, status_code=0, cur=cur, con=con)
         response['status'] = u'Сохранено'
     except Exception, e:
         response['status'] = u'Не сохранено. Причина: {e}'.format(e=e)

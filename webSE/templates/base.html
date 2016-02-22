@@ -179,7 +179,31 @@
               </div>
             </div>
           </div>
-          <div id="request_content"></div>
+          <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#channels_status">Состояние каналов опроса</a></li>
+                <li><a data-toggle="tab" href="#request_result">Результаты опроса</a></li>
+          </ul>
+          <div class="tab-content">
+              <div id="channels_status" class="tab-pane fade in active">
+                <button class="channels_status_refresh btn btn-info">Обновить состояние</button>
+                <table id="channels_status_table" class="table table-bordered table-hover">
+                  <thead>
+                      <tr>
+                          <th>ID канала</th>
+                          <th>Описание</th>
+                          <th>Тип</th>
+                          <th>Дата обновления</th>
+                          <th>Статус</th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+                  </table>
+              </div>
+              <div id="request_result" class="tab-pane fade">
+                <div id="request_content"></div>
+              </div>
+          </div>
+          
         </div>
         
       </div>

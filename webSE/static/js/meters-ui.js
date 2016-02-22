@@ -586,6 +586,16 @@ function channelTR(channel) {
     return html;
 }
 
+function channelStatusTR(channel) {
+    var html = '';
+    html += '<tr id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
+    html += '<td id="ch_desc">'+channel.ch_desc+'</td>';
+    html += '<td id="ch_type">'+channel.type_id['type']+'</td>';
+    html += '<td id="status_datetime">'+channel.status_datetime+'</td>';
+    html += '<td id="status_string">'+channel.status_string+'</td></tr>';
+    return html;
+}
+
 function objectTR(object) {
     var html = '';
     html += '<tr id="obj_'+object.id+'"><td width="50">'+object.id+'</td>';

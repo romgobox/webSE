@@ -8,6 +8,7 @@ from SE30x.protocol import SE30X, ProtocolFactory
 from SE30x.tcp_channel import ChannelFactory
 from SE30x.utils import dateList, dateListPP
 from webSE.api.model import get_db
+from webSE.api.model.channels_status import update_channel_status
 from meter import Meter
 logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d]# %(levelname)-4s [%(asctime)s] %(message)s', level = logging.DEBUG)
 
@@ -39,9 +40,12 @@ class Algorithm(object):
         for channel, meters in self.metersMap.items():
             try:
                 channel.connect()
+                update_channel_status(channel_id=channel.id, status_code=1)
             except:
+                update_channel_status(channel_id=channel.id, status_code=4)
                 break
             for meter in meters:
+                update_channel_status(channel_id=channel.id, status_code=2)
                 params = meter.parameters
                 if meter.authCheckNum():
                     if params.get('fixDay'):
@@ -55,6 +59,7 @@ class Algorithm(object):
                         meter.getPPValues(dates)
                 meter.logOut()
             channel.terminate()
+            update_channel_status(channel_id=channel.id, status_code=3)
 
     def getMetersByChannel(self, ch_id=None, channel=None):
         channel = channel or self.getChannel(ch_id)

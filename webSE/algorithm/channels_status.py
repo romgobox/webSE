@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import time
 from datetime import datetime
-# from webSE.api.model import get_db
+from webSE.api.model import get_db
 
 '''
 Статусы каналов:
@@ -55,3 +55,4 @@ def updateChannelStatus(cur, con, channel_id, status_code, status_string=None):
         
     cur.execute(channel_status_sql)
     con.commit()
+

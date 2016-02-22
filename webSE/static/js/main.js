@@ -8,6 +8,7 @@ $(document).ready(function() {
     meters.getProtocols();
     meters.getChannelsType();
     meters.getChannels();
+    meters.getChannelsStatus();
     meters.getMetersType();
     meters.getMeters();
 
@@ -63,6 +64,11 @@ function registerClick() {
     $("#requests_menu").on('click', ".channels_requests_queue", function (e){
         e.preventDefault();
         requestByChannelsDialog(meters, true);
+    });
+
+    $("#channels_status").on('click', ".channels_status_refresh", function (e){
+        e.preventDefault();
+        meters.getChannelsStatus();
     });
 
     ////////////////////////////////////////////////////////////////////////////
