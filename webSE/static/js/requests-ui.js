@@ -31,7 +31,7 @@ function requestByChannelsDialog(meters, reply) {
         var channel = meters.channels[i]
         if (channel.is_active == 1) {
             html += '<tr>';
-            html += '<td><input type="checkbox" value='+channel['id']+'></td>'
+            html += '<td><input type="checkbox" checked value='+channel['id']+'></td>'
             html += '<td>'+channel['ch_desc']+' [ '+channel['ch_ip']+':'+channel['ch_port']+' ]</td>';
             html += '</td>';
         }
@@ -64,11 +64,31 @@ function requestByChannelsDialog(meters, reply) {
             click: function () {
                     var tableID = $("#channels_check");
                     var result = collectValues(tableID);
-                    if (result['channels'].length) {
-                        getRequestByChannel(result);
+                    var channels = result['channels'];
+                    if (channels.length) {
+                        var busy_channels = '';
+                        var free_channels = [];
+                        for (var id in channels) {
+                            var channel = meters.returnChannel(channels[id]);
+                            channel.getStatus();
+                            var code = channel.status_code;
+                            if (code==1 || code==2 || code==3) {
+                                busy_channels += '<br>'+channel['ch_desc'];
+                            }
+                            else {
+                                free_channels.push(channels[id]);
+                            }
+                        }
+                        if (busy_channels != '') {
+                            showChannelsStatusDialog('warning', 'Канал(ы) занят(ы):'+busy_channels, 'Канал(ы) занят(ы)!');
+                        }
+                        if (free_channels.length) {
+                            result['channels'] = free_channels;
+                            getRequestByChannel(result);
+                            $('#waiting').show();
+                            showStatusDialog('info', 'Задание на опрос отправлено в очередь', 'Информация');
+                        }
                         $(this).dialog("close");
-                        $('#waiting').show();
-                        showStatusDialog('info', 'Задание на опрос отправлено в очередь', 'Информация');
                     }
                     else {
                         alert("Нужно выбрать хотя бы один канал");

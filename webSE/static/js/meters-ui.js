@@ -37,6 +37,32 @@ function showStatusDialog(status, data, title) {
     });
 }
 
+function showChannelsStatusDialog(status, data, title) {
+    var status = status || 'success';
+    var data = data || 'Что-то произошло, а что непонятно!';
+    var title = title || 'Добавлен прибора учета';
+    html = '<div class="alert alert-'+status+'">'+data+'</div>'
+    $("#channel_status_dialog").html(html);
+    $("#channel_status_dialog").dialog({
+        title: title,
+        height: 200,
+        width: 450,
+        modal: true,
+        resizable: true,
+        buttons: [
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-circle-plus"
+                },
+            click: function () {
+                    $(this).dialog("close");
+                }
+            }
+          ]
+    });
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Meters dialogs
 ////////////////////////////////////////////////////////////////////////////////

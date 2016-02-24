@@ -40,6 +40,22 @@ Channel.prototype.saveParams = function (params, meters) {
     });
 };
 
+Channel.prototype.getStatus = function () {
+    var self = this;
+    $.ajax({
+        url: "/channels_status/"+self.id,
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    self['status_code'] = item['status_code'];
+                    self['status_datetime'] = item['status_datetime'];
+                    self['status_string'] = item['status_string'];
+                }
+    });
+};
+
 Channel.prototype.updateData = function (data, meters) {
     this.id = data['id'];
     this.ch_desc = data['ch_desc'];
