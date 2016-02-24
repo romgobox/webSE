@@ -3,11 +3,12 @@ $(document).ready(function() {
     // Инициализириуем глобальный объект
     var meters = new Meters();
     window.meters = meters;
-    // Запрашиваем объекты, протоколы, каналы, счетчики
+    window.meters.staticUrl = staticUrl;
     meters.getObjects();
     meters.getProtocols();
     meters.getChannelsType();
     meters.getChannels();
+    meters.getChannelsStatus();
     meters.getMetersType();
     meters.getMeters();
 
@@ -63,6 +64,19 @@ function registerClick() {
     $("#requests_menu").on('click', ".channels_requests_queue", function (e){
         e.preventDefault();
         requestByChannelsDialog(meters, true);
+    });
+
+    $("#channels_status").on('click', ".channels_status_refresh", function (e){
+        e.stopImmediatePropagation();
+        var meters = window.meters;
+        if ($("#channels_status .channels_status_refresh").html() == 'Вкл. автообновление') {
+            meters.channelStatusRefresh = setInterval(function() { meters.getChannelsStatus() }, 3000);
+            $("#channels_status .channels_status_refresh").html("Выкл. автообновление");
+        }
+        else {
+            clearInterval(meters.channelStatusRefresh); 
+            $("#channels_status .channels_status_refresh").html("Вкл. автообновление");
+        }
     });
 
     ////////////////////////////////////////////////////////////////////////////

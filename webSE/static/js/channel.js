@@ -16,6 +16,10 @@ Channel.prototype.renderChannelTR = function() {
     return channelTR(this);
 };
 
+Channel.prototype.renderChannelStatusTR = function() {
+    return channelStatusTR(this);
+};
+
 Channel.prototype.saveParams = function (params, meters) {
     var self = this;
     var meters = meters;
@@ -33,6 +37,22 @@ Channel.prototype.saveParams = function (params, meters) {
             $("#ch_"+self.id).replaceWith(html);
             showStatusDialog('info', data['status'], 'Изменен канал опроса');
         }
+    });
+};
+
+Channel.prototype.getStatus = function () {
+    var self = this;
+    $.ajax({
+        url: "/channels_status/"+self.id,
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    self['status_code'] = item['status_code'];
+                    self['status_datetime'] = item['status_datetime'];
+                    self['status_string'] = item['status_string'];
+                }
     });
 };
 

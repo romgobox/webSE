@@ -37,6 +37,32 @@ function showStatusDialog(status, data, title) {
     });
 }
 
+function showChannelsStatusDialog(status, data, title) {
+    var status = status || 'success';
+    var data = data || 'Что-то произошло, а что непонятно!';
+    var title = title || 'Добавлен прибора учета';
+    html = '<div class="alert alert-'+status+'">'+data+'</div>'
+    $("#channel_status_dialog").html(html);
+    $("#channel_status_dialog").dialog({
+        title: title,
+        height: 200,
+        width: 450,
+        modal: true,
+        resizable: true,
+        buttons: [
+            {
+                text: "Ok",
+                icons: {
+                    primary: "ui-icon-circle-plus"
+                },
+            click: function () {
+                    $(this).dialog("close");
+                }
+            }
+          ]
+    });
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Meters dialogs
 ////////////////////////////////////////////////////////////////////////////////
@@ -583,6 +609,21 @@ function channelTR(channel) {
     html += '<span class="glyphicon glyphicon-pencil"></span> Редактировать</button>';
     html += '<button class="delete_ch btn btn-danger btn-sm" ch_id="'+channel.id+'" >';
     html += '<span class="glyphicon glyphicon-trash"></span> Удалить</button></div></td></tr>'
+    return html;
+}
+
+function channelStatusTR(channel) {
+    var html = '';
+    var meters = window.meters;
+    html += '<tr id="ch_'+channel.id+'"><td width="50">'+channel.id+'</td>';
+    html += '<td id="ch_desc">'+channel.ch_desc+'</td>';
+    html += '<td id="ch_type">'+channel.type_id['type']+'</td>';
+    html += '<td id="status_datetime">'+channel.status_datetime+'</td>';
+    html += '<td id="status_string">'+channel.status_string+'</td>';
+    if (channel.status_code==1 || channel.status_code==2 || channel.status_code==3) {
+        html += '<td align="center"><div id="channel_processing"><img src="'+meters.staticUrl+'images/channel_status_processing.gif"></div></td>';
+    }
+    html += '</tr>';
     return html;
 }
 

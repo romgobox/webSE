@@ -14,6 +14,10 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
+<!-- Bootstrap Switch -->
+<script src="{{ url_for('static', filename='js/libs/bootstrap-switch.min.js') }}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-switch.min.css') }}">
+
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -29,6 +33,11 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/reports.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/requests-ui.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/requests.js') }}"></script>
+<script type="text/javascript">
+
+  var staticUrl = "{{ url_for('static', filename='') }}";
+
+</script>
 <style type="text/css">
   #waiting {
     display: none;
@@ -55,14 +64,16 @@
 <div id="obj_edit_dialog"></div>
 <div id="obj_delete_dialog"></div>
 <div id="obj_add_dialog"></div>
+
 <div id="status_dialog"></div>
+<div id="channel_status_dialog"></div>
 <!-- Reports dialogs -->
 <div id="fixday-report-dialog"></div>
 
 <!-- Requests dialogs -->
 <div id="request_by_channels_dialog"></div>
 
-<div id="waiting" style=""><img src="{{ url_for('static', filename='images/wait2.gif') }}"></div>
+<div id="waiting"><img src="{{ url_for('static', filename='images/wait2.gif') }}"></div>
   <div class="container">
     <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -174,12 +185,41 @@
               <div class="col-md-12">
                 <div id="requests_menu" class="panel-body">
                   <button class="channels_requests btn btn-info">Опрос по каналам</button>
-                  <button class="channels_requests_queue btn btn-info">Опрос по каналам в очереди</button>
+                  <!-- <button class="channels_requests_queue btn btn-info">Опрос по каналам в очереди</button> -->
                 </div>
               </div>
             </div>
           </div>
-          <div id="request_content"></div>
+          <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#channels_status">Состояние каналов опроса</a></li>
+                <li><a data-toggle="tab" href="#request_result">Результаты опроса</a></li>
+          </ul>
+          <div class="tab-content">
+              <div id="channels_status" class="tab-pane fade in active">
+
+                <div class="panel panel-default">
+                  <div id="requests_menu" class="panel-body">
+                    <button class="channels_status_refresh btn btn-info">Вкл. автообновление</button>
+                  </div>
+                </div>
+                <table id="channels_status_table" class="table table-bordered table-hover">
+                  <thead>
+                      <tr>
+                          <th>ID канала</th>
+                          <th>Описание</th>
+                          <th>Тип</th>
+                          <th>Дата обновления</th>
+                          <th>Статус</th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+                  </table>
+              </div>
+              <div id="request_result" class="tab-pane fade">
+                <div id="request_content"></div>
+              </div>
+          </div>
+          
         </div>
         
       </div>
