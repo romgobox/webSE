@@ -3,10 +3,12 @@
 import json
 from flask import request
 from flask.views import MethodView
+from webSE.api.decorators import user_required
 from webSE.api.model.channels import get_channels, add_channel, update_channel, del_channel
 
 
 class ChannelsAPI(MethodView):
+    decorators = [user_required]
 
     def get(self, channel_id):
         if channel_id is None:

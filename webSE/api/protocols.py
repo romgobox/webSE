@@ -3,10 +3,12 @@
 import json
 from flask import request
 from flask.views import MethodView
+from webSE.api.decorators import user_required
 from webSE.api.model.protocols import get_protocols
 
 
 class ProtocolsAPI(MethodView):
+    decorators = [user_required]
 
     def get(self, protocol_id):
         if protocol_id is None:

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+</head>
+<body>
+  <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            
+            <a class="navbar-brand" href="/">WEB AMR</a>
+
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+          
+          </div>
+        </div>
+      </nav>
+      <div id="content">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <h4 style="border-bottom: 1px solid #c5c5c5;">
+                Введите данные пользователя для авторизации
+              </h4>
+            <div style="padding: 20px;" id="form-olvidado">
+              <form accept-charset="UTF-8" role="form" id="login-form" method="post" action="/login">
+                <fieldset>
+                  <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input class="form-control" placeholder="Имя пользователя" name="username" type="text" required>
+                  </div>
+                  <div class="form-group input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" placeholder="Пароль" name="password" type="password" required>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" id="olvidado">Войти</button>
+                  </div>
+                </fieldset>
+                {% if error%}
+                <div class="alert alert-danger">
+                  {{error}}
+                </div>
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </div> 
+  </div>
+</body>
+</html>

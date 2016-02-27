@@ -3,10 +3,12 @@
 import json
 from flask import request
 from webSE import app
+from webSE.api.decorators import user_required
 from webSE.api.model.reports import get_report_by_meter_id, get_report_diff_by_meter_id
 
 
 @app.route('/reports/<int:param_num>/<int:meter_id>', methods=['POST'])
+@user_required
 def report_by_meter_id(param_num, meter_id):
     param_num = int(param_num)
     meter_id = int(meter_id)

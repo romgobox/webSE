@@ -3,10 +3,13 @@
 import json
 from flask import request
 from flask.views import MethodView
+from webSE.api.decorators import user_required
 from webSE.api.model.meters import get_meters, add_meter, update_meter, del_meter
 
 
+
 class MetersAPI(MethodView):
+    decorators = [user_required]
 
     def get(self, meter_id):
         if meter_id is None:

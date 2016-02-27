@@ -2,13 +2,19 @@
 # -*- coding: utf-8 -*-
 import MySQLdb
 import MySQLdb.cursors
+import ConfigParser
+import os
+
+config_file = os.path.abspath(os.path.join(__file__ ,"../../..")) + '/config.ini'
+parser = ConfigParser.SafeConfigParser()
+parser.read(config_file)
 
 
 def get_db():
-    con = MySQLdb.connect(host='localhost',
-                            user='webse',
-                            passwd='webse',
-                            db='webamr',
+    con = MySQLdb.connect(host=parser.get('DB', 'host'),
+                            user=parser.get('DB', 'user'),
+                            passwd=parser.get('DB', 'password'),
+                            db=parser.get('DB', 'schema'),
                             cursorclass=MySQLdb.cursors.DictCursor)
     cur = con.cursor()
 
