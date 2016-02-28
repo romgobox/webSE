@@ -1,0 +1,8 @@
+[app]
+SECRET_KEY = secret_key
+
+[DB]
+host = localhost
+schema = db_schema
+user = db_user
+password = db_password
