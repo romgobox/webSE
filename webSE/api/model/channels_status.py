@@ -15,7 +15,7 @@ channel_status_dict = {
     5: u'Соединение не было установлено'
 }
 
-def get_channels_status():
+def get_channels_status(user_id=None):
     channels_status_sql = '''
     SELECT 
         cs.id, 
@@ -25,7 +25,11 @@ def get_channels_status():
         cs.status_string
     FROM
         channels_status cs
-    '''
+    WHERE
+        channel_id IN
+        (SELECT id FROM channels WHERE user_id={user_id})
+    '''.format(user_id=user_id)
+
     cur, con = get_db()
     cur.execute(channels_status_sql)
     channels_statuses = cur.fetchall()
@@ -36,7 +40,7 @@ def get_channels_status():
         channels_statuses_list.append(channel_status)
     return channels_statuses_list
 
-def get_channel_status(channel_id):
+def get_channel_status(channel_id, user_id=None):
     channel_status_sql = '''
     SELECT 
         cs.id, 
@@ -46,8 +50,12 @@ def get_channel_status(channel_id):
         cs.status_string
     FROM
         channels_status cs
-    WHERE channel_id={channel_id}
-    '''.format(channel_id=channel_id)
+    WHERE
+        channel_id=(SELECT id
+                    FROM channels
+                    WHERE
+                        id={channel_id} AND user_id={user_id})
+    '''.format(channel_id=channel_id, user_id=user_id)
 
     cur, con = get_db()
     cur.execute(channel_status_sql)

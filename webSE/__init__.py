@@ -1,23 +1,39 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, g, redirect, url_for
+from flask.ext.login import login_required
 import json
+import os
+import ConfigParser
 import webSE.api.model
+from webSE.api.users import UserAPI
 from webSE.api.meters import MetersAPI
-from webSE.api.channels import ChannelsAPI
 from webSE.api.objects import ObjectsAPI
+from webSE.api.channels import ChannelsAPI
 from webSE.api.protocols import ProtocolsAPI
 from webSE.api.meters_type import MetersTypeAPI
 from webSE.api.channels_type import ChannelsTypeAPI
 from webSE.api.channels_status import ChannelsStatusAPI
+
+config_file = os.path.dirname(__file__)+'/config.ini'
+parser = ConfigParser.SafeConfigParser()
+parser.read(config_file)
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = parser.get('app', 'SECRET_KEY')
 
-@app.route('/')
-def hello():
-    return render_template('base.html')
-
+import webSE.api.login
 import webSE.api.reports
 import webSE.api.requests_values
+
+
+@app.route('/webamr')
+@login_required
+def webamr_index():
+    return render_template('base.html')
+
+users_view = UserAPI.as_view('users_api')
+app.add_url_rule('/user', view_func=users_view, methods=['GET',])
 
 meters_view = MetersAPI.as_view('meters_api')
 app.add_url_rule('/meters', defaults={'meter_id': None}, view_func=meters_view, methods=['GET',])

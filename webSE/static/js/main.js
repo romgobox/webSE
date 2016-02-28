@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
     // Инициализириуем глобальный объект
+    $("#waiting").show();
     var meters = new Meters();
     window.meters = meters;
     window.meters.staticUrl = staticUrl;
@@ -11,6 +12,7 @@ $(document).ready(function() {
     meters.getChannelsStatus();
     meters.getMetersType();
     meters.getMeters();
+    meters.getUser();
 
     // Рисуем интерфейс
     renderMetersUI();
@@ -18,7 +20,9 @@ $(document).ready(function() {
     meters.renderMetersTable();
     meters.renderChannelsTable();
     meters.renderObjectsTable();
+    meters.renderUserTable();
     registerClick();
+    $("#waiting").hide();
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +39,7 @@ function registerClick() {
         $("#configurator").toggleClass("active");
         $("#reports").removeClass("active");
         $("#requests").removeClass("active");
+        $("#user").removeClass("active");
     });
 
     $("#main_menu").on('click', "#reports", function (e){
@@ -43,6 +48,7 @@ function registerClick() {
         $("#configurator").removeClass("active");
         $("#reports").toggleClass("active");
         $("#requests").removeClass("active");
+        $("#user").removeClass("active");
     });
 
     $("#main_menu").on('click', "#requests", function (e){
@@ -51,6 +57,16 @@ function registerClick() {
         $("#configurator").removeClass("active");
         $("#reports").removeClass("active");
         $("#requests").toggleClass("active");
+        $("#user").removeClass("active");
+    });
+
+    $("#main_menu").on('click', "#user", function (e){
+        e.preventDefault();
+        renderUserUI();
+        $("#configurator").removeClass("active");
+        $("#reports").removeClass("active");
+        $("#requests").removeClass("active");
+        $("#user").toggleClass("active");
     });
 
     ////////////////////////////////////////////////////////////////////////////
