@@ -6,6 +6,7 @@ function renderMetersUI() {
         $("#meters_ui").show();
         $("#reports_ui").hide();
         $("#requests_ui").hide();
+        $("#user_ui").hide();
     }
 }
 ////////////////////////////////////////////////////////////////////////////////

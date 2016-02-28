@@ -6,6 +6,7 @@ import json
 import os
 import ConfigParser
 import webSE.api.model
+from webSE.api.users import UserAPI
 from webSE.api.meters import MetersAPI
 from webSE.api.objects import ObjectsAPI
 from webSE.api.channels import ChannelsAPI
@@ -31,6 +32,8 @@ import webSE.api.requests_values
 def webamr_index():
     return render_template('base.html')
 
+users_view = UserAPI.as_view('users_api')
+app.add_url_rule('/user', view_func=users_view, methods=['GET',])
 
 meters_view = MetersAPI.as_view('meters_api')
 app.add_url_rule('/meters', defaults={'meter_id': None}, view_func=meters_view, methods=['GET',])

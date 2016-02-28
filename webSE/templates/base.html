@@ -29,6 +29,8 @@
 <script type="text/javascript" src="{{ url_for('static', filename='js/reports.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/requests-ui.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/requests.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/user-ui.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/user.js') }}"></script>
 <script type="text/javascript">
 
   var staticUrl = "{{ url_for('static', filename='') }}";
@@ -79,10 +81,14 @@
             <a class="navbar-brand" href="/">WEB AMR</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
-            <ul id="main_menu" class="nav navbar-nav">
+            <ul id="main_menu" class="nav navbar-nav navbar-left">
               <li id="configurator"><a href="#">Конфигурация</a></li>
               <li id="reports"><a href="#">Отчеты</a></li>
               <li id="requests"><a href="#">Опросы</a></li>
+              <li id="user"><a href="#">Пользователь</a>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <p id="menu_user_holder" class="navbar-text"></p>
               <li id="exit"><a href="/logout">Выйти</a>
             </ul>
           </div><!--/.nav-collapse -->
@@ -217,6 +223,57 @@
               </div>
           </div>
           
+        </div>
+        <!-- User UI -->
+        <div id="user_ui" hidden>
+          <div class="row">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8" align="center">
+              <div id="user_panel" class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 id="user_name" class="panel-title"></h3>
+                </div>
+                <div class="panel-body">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Имя пользователя:</td>
+                        <td id="user_username"></td>
+                      </tr>
+                      <tr>
+                        <td>Роль:</td>
+                        <td id="user_role"></td>
+                      </tr>
+                      <tr>
+                        <td>Организация:</td>
+                        <td id="user_org_name"></td>
+                      </tr>
+                      <tr>
+                        <td>ИНН:</td>
+                        <td id="user_org_inn"></td>
+                      </tr>
+                        <tr>
+                        <td>Описание:</td>
+                        <td id="user_org_desc"></td>
+                      </tr>
+                      <tr>
+                        <td>E-mail</td>
+                        <td id="user_org_email"></td>
+                      </tr>
+                      <tr>
+                        <td>Контакты:</td>
+                        <td id="user_org_contacts"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="panel-footer">
+                  <a type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                  <a type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
       </div>

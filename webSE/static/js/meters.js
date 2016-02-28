@@ -10,6 +10,11 @@ var Meters = function() {
     // this.meters = {}
     this.meters = [];
     this.meters_type = {};
+    this.user = {};
+};
+
+Meters.prototype.addUser = function(user) {
+    this.user = user;
 };
 
 Meters.prototype.addObject = function(object) {
@@ -39,6 +44,20 @@ Meters.prototype.addMeter = function(meter) {
 
 Meters.prototype.addMeterType = function(meter_type) {
     this.meters_type[meter_type.id] = meter_type;
+};
+
+Meters.prototype.getUser = function() {
+    var self = this;
+    $.ajax({
+        url: "/user",
+        type: "GET",
+        async: false,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+                    self.addUser(new User(data));
+                }
+    });
 };
 
 Meters.prototype.getObjects = function() {
@@ -305,6 +324,20 @@ Meters.prototype.renderObjectsTable = function() {
     };
     $("#obj_table tbody").html(html);
     return html;
+};
+
+Meters.prototype.renderUserTable = function() {
+    var user = meters.user;
+    $("#menu_user_holder").html(user['name']+' ('+user['username']+') ')
+    $("#user_panel #user_name").html(user['name']);
+    $("#user_panel #user_username").html(user['username']);
+    $("#user_panel #user_role").html(user.role['name']);
+    $("#user_panel #user_org_name").html(user.organisation['name']);
+    $("#user_panel #user_org_inn").html(user.organisation['inn']);
+    $("#user_panel #user_org_desc").html(user.organisation['desc']);
+    $("#user_panel #user_org_email").html(user.organisation['email']);
+    $("#user_panel #user_org_contacts").html(user.organisation['contacts']);
+    return false;
 };
 
 
