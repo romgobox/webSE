@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 import json
-from flask import request
+from flask import request, g
 from flask.views import MethodView
 from webSE.api.decorators import user_required
 from webSE.api.model.meters import get_meters, add_meter, update_meter, del_meter
@@ -12,8 +12,9 @@ class MetersAPI(MethodView):
     decorators = [user_required]
 
     def get(self, meter_id):
+        user_id = g.user or None
         if meter_id is None:
-            response = get_meters()
+            response = get_meters(user_id)
             return json.dumps(response)
         else:
             id = int(meter_id)
@@ -21,6 +22,7 @@ class MetersAPI(MethodView):
             return json.dumps(response)
 
     def post(self):
+        user_id = g.user or None
         data = {}
         data['type_id'] = int(request.json['type_id'])
         data['wh_adr'] = request.json['wh_adr']
@@ -34,10 +36,11 @@ class MetersAPI(MethodView):
         data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])
         data['is_active'] = int(request.json['is_active'])
-        response = add_meter(data)
+        response = add_meter(data, user_id)
         return json.dumps(response)
 
     def put(self, meter_id):
+        user_id = g.user or None
         id = int(meter_id)
         data = {}
         data['type_id'] = int(request.json['type_id'])
@@ -52,10 +55,11 @@ class MetersAPI(MethodView):
         data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])
         data['is_active'] = int(request.json['is_active'])
-        response = update_meter(id, data)
+        response = update_meter(id, data, user_id)
         return json.dumps(response)
 
     def delete(self, meter_id):
+        user_id = g.user or None
         id = int(meter_id)
-        response = del_meter(id)
+        response = del_meter(id, user_id)
         return json.dumps(response)

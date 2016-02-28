@@ -5,7 +5,7 @@ import datetime
 from webSE.api.model import get_db
 from webSE.api.model.channels_status import insert_channel_status, update_channel_status
 
-def get_channels():
+def get_channels(user_id=None):
     channels_sql = '''
     SELECT
         ch.id, 
@@ -16,7 +16,9 @@ def get_channels():
         ch.ch_settings,
         ch.is_active
     FROM channels ch
-    '''
+    WHERE user_id={user_id}
+    '''.format(user_id=user_id)
+
     cur, con = get_db()
     cur.execute(channels_sql)
     channels = cur.fetchall()
@@ -27,7 +29,7 @@ def get_channels():
         channels_list.append(channel)
     return channels_list
 
-def add_channel(data):
+def add_channel(data, user_id=None):
     channel_sql = u'''
     INSERT INTO channels 
     VALUES(
@@ -37,14 +39,16 @@ def add_channel(data):
         {type_id}, 
         {ch_port},  
         '{ch_settings}',
-        {is_active}) 
+        {is_active},
+        {user_id})
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
             type_id=data['type_id'],
             ch_port=data['ch_port'], 
             ch_settings=json.dumps(data['ch_settings']),
-            is_active=data['is_active']) 
+            is_active=data['is_active'],
+            user_id=user_id)
 
 
     response = {'status': u'Неопределено'}
@@ -60,7 +64,7 @@ def add_channel(data):
         response['status'] = u'Канал опроса не добавлен. Причина: {e}'.format(e=e)
     return response
 
-def update_channel(chID, data):
+def update_channel(chID, data, user_id=None):
     channel_sql = u'''
     UPDATE channels
     SET 
@@ -70,7 +74,7 @@ def update_channel(chID, data):
         ch_port='{ch_port}', 
         ch_settings='{ch_settings}',
         is_active={is_active}
-    WHERE id={id}
+    WHERE id={id} AND user_id={user_id}
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
@@ -78,6 +82,7 @@ def update_channel(chID, data):
             ch_port=data['ch_port'], 
             ch_settings=json.dumps(data['ch_settings']),
             is_active=data['is_active'],
+            user_id=user_id,
             id=chID)
 
     response = {'status': u'Неопределено'}
@@ -91,7 +96,7 @@ def update_channel(chID, data):
         response['status'] = u'Не сохранено. Причина: {e}'.format(e=e)
     return response
 
-def del_channel(id):
+def del_channel(id, user_id=None):
     channel_sql = u'''
     DELETE FROM channels
     WHERE id={id}
@@ -99,8 +104,8 @@ def del_channel(id):
 
     channel_status_sql = u'''
     DELETE FROM channels_status
-    WHERE channel_id={id}
-    '''.format(id=id)
+    WHERE channel_id={id} AND user_id={user_id}
+    '''.format(id=id, user_id=user_id)
     response = {'status': u'Неопределено'}
     try:
         cur, con = get_db()

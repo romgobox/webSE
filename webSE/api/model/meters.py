@@ -3,7 +3,7 @@
 import json
 from webSE.api.model import get_db
 
-def get_meters():
+def get_meters(user_id=None):
     meters_sql = '''
     SELECT 
         wh.id, 
@@ -21,8 +21,10 @@ def get_meters():
         wh.is_active
     FROM 
         meters wh
+    WHERE user_id={user_id}
     ORDER BY wh.object_id
-    '''
+    '''.format(user_id=user_id)
+
     cur, con = get_db()
     cur.execute(meters_sql)
     meters = cur.fetchall()
@@ -33,7 +35,7 @@ def get_meters():
         meters_list.append(meter)
     return meters_list
 
-def add_meter(data):
+def add_meter(data, user_id=None):
     meter_sql = u'''
     INSERT INTO meters 
     VALUES(
@@ -49,7 +51,8 @@ def add_meter(data):
         '{wh_settings}', 
         {object_id}, 
         {channel_id}, 
-        {is_active})
+        {is_active},
+        {user_id})
     '''.format(
             type_id=data['type_id'],
             wh_adr=data['wh_adr'], 
@@ -62,7 +65,8 @@ def add_meter(data):
             wh_settings=json.dumps(data['wh_settings']), 
             object_id=data['object_id'],
             channel_id=data['channel_id'], 
-            is_active=data['is_active'])
+            is_active=data['is_active'],
+            user_id=user_id)
 
     response = {'status': u'Неопределено'}
     try:
@@ -76,7 +80,7 @@ def add_meter(data):
         response['status'] = u'Прибор учета не добавлен. Причина: {e}'.format(e=e)
     return response
 
-def update_meter(whID, data):
+def update_meter(whID, data, user_id=None):
     meter_sql = u'''
     UPDATE meters
     SET 
@@ -91,7 +95,8 @@ def update_meter(whID, data):
         wh_settings='{wh_settings}', 
         object_id={object_id},
         channel_id={channel_id}, 
-        is_active={is_active}
+        is_active={is_active},
+        user_id={user_id}
     WHERE id={id}
     '''.format(
             type_id=data['type_id'],
@@ -106,6 +111,7 @@ def update_meter(whID, data):
             object_id=data['object_id'],
             channel_id=data['channel_id'], 
             is_active=data['is_active'],
+            user_id=user_id,
             id=whID)
 
     response = {'status': u'Неопределено'}
@@ -118,11 +124,11 @@ def update_meter(whID, data):
         response['status'] = u'Не сохранено. Причина: {e}'.format(e=e)
     return response
 
-def del_meter(id):
+def del_meter(id, user_id=None):
     meter_sql = u'''
     DELETE FROM meters
-    WHERE id={id}
-    '''.format(id=id)
+    WHERE id={id} AND user_id={user_id}
+    '''.format(id=id, user_id=user_id)
     response = {'status': u'Неопределено'}
     try:
         cur, con = get_db()
