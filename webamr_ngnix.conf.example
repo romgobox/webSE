@@ -1,0 +1,14 @@
+server {
+    listen 80;
+    server_name webamr.dev;
+    client_max_body_size 50M;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix://path/to/virtual/venvdir/project/uwsgi/webamr.sock;
+    }
+
+    location /static {
+        alias  /path/to/virtual/venvdir/project/static/;
+    }
+}

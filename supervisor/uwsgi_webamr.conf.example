@@ -1,0 +1,9 @@
+[program:uwsgi_webamr]
+command=//path/to/virtual/venvdir/bin/uwsgi /path/to/virtual/venvdir/project/uwsgi/uwsgi_webamr.ini
+autostart=true
+autorestart=true
+
+# Сделать папку /var/log/supervisor/uwsgi
+stdout_logfile=/var/log/supervisor/uwsgi/uwsgi_webamr.log
+redirect_stderr=true
+exitcodes=0
