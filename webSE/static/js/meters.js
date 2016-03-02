@@ -244,7 +244,7 @@ Meters.prototype.deleteMeter = function(whID) {
         dataType: "json",
         contentType: "application/json",
         success: function(data){
-            $("#wh_"+whID).remove();
+            $("#tr_wh_"+whID).remove();
             // delete self.meters[whID];
             for (var i = 0; i < self.meters.length; i++) {
                 if (self.meters[i].id == whID) {
