@@ -99,13 +99,13 @@ def update_channel(chID, data, user_id=None):
 def del_channel(id, user_id=None):
     channel_sql = u'''
     DELETE FROM channels
-    WHERE id={id}
-    '''.format(id=id)
+    WHERE id={id} AND user_id={user_id}
+    '''.format(id=id, user_id=user_id)
 
     channel_status_sql = u'''
     DELETE FROM channels_status
-    WHERE channel_id={id} AND user_id={user_id}
-    '''.format(id=id, user_id=user_id)
+    WHERE channel_id={id}
+    '''.format(id=id)
     response = {'status': u'Неопределено'}
     try:
         cur, con = get_db()
