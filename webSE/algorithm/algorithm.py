@@ -4,9 +4,9 @@ import time
 import json
 import logging
 from datetime import datetime
-from SE30x.protocol import SE30X, ProtocolFactory
-from SE30x.tcp_channel import ChannelFactory
-from SE30x.utils import dateList, dateListPP
+from webSE.protocol.se30x import SE30X, ProtocolFactory
+from webSE.protocol.tcp_channel import ChannelFactory
+from webSE.protocol.utils import dateList, dateListPP
 from webSE.api.model import get_db
 from webSE.api.model.channels_status import update_channel_status
 from meter import Meter
