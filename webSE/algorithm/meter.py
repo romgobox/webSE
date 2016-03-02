@@ -3,7 +3,7 @@
 import time
 from datetime import datetime, timedelta
 import logging
-from SE30x.utils import dateList, dateListPP
+from webSE.protocol.utils import dateList, dateListPP
 from webSE.api.model import get_db
 logging.basicConfig(format = u'%(filename)s[LINE:%(lineno)d]# %(levelname)-4s [%(asctime)s] %(message)s', level = logging.DEBUG)
 
