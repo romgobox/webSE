@@ -5,12 +5,13 @@ uid = 1001
 gid = 1001
 master = true
 processes = 2
-chmod-socket = 666
+#chmod-socket = 666
 
 virtualenv = /path/to/virtual/venvdir
 pythonpath = /path/to/virtual/venvdir/project
 pidfile = /path/to/virtual/venvdir/project/uwsgi/webamr.pid
-socket = /path/to/virtual/venvdir/project/uwsgi/webamr.sock
+#socket = /path/to/virtual/venvdir/project/uwsgi/webamr.sock
+socket = 127.0.0.1:4242
 module = run
 callable = app
 logdate = true
