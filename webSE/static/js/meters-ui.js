@@ -70,6 +70,7 @@ function showChannelsStatusDialog(status, data, title) {
 function addMeterDialog(meters) {
     var meters = meters;
     var html = '';
+    html += '<div class="alert alert-danger" hidden></div>';
     html += '<table id="wh_add" class="table table-bordered table-hover">';
     html += '<tr><td>Объект</td><td><select id="object_id">';
     for (var obj in meters.objects) {
@@ -118,11 +119,106 @@ function addMeterDialog(meters) {
         result['is_active'] = $(tableID).find("#is_active").val();
         return result;
     }
+    function validateValues(tableID) {
+        var result = true;
+        var alert = '';
+        var wh_desc = $(tableID).find("#wh_desc").val();
+        if (wh_desc == '') {
+            alert = 'Описание прибора учета не должно быть пустым!<br> Сами же запутаетесь...';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_num = $(tableID).find("#wh_num").val();
+        if (wh_num == '') {
+            alert = 'Не указан номер прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_adr = $(tableID).find("#wh_adr").val();
+        if (wh_adr == '') {
+            alert = 'Не указан сетевой адрес прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if (!$.isNumeric(wh_adr)) {
+            alert = 'Сетевой адрес должен быть числом!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_pass = $(tableID).find("#wh_pass").val();
+        if (wh_pass == '') {
+            alert = 'Не указан пароль прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_KI = $(tableID).find("#wh_KI").val();
+        if (wh_KI == '') {
+            alert = 'Не указан коэффициент трансформации тока!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_KI) || parseInt(wh_KI) < 1) {
+            alert = 'Коэффициент трансформации тока должен быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_KU = $(tableID).find("#wh_KU").val();
+        if (wh_KU == '') {
+            alert = 'Не указан коэффициент трансформации напряжения!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_KU) || parseInt(wh_KU) < 1) {
+            alert = 'Коэффициент трансформации напряжения должен быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_IMPL = $(tableID).find("#wh_IMPL").val();
+        if (wh_IMPL == '') {
+            alert = 'Не указано количество импульсов прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_IMPL) || parseInt(wh_IMPL) < 1) {
+            alert = 'Количество импульсов прибора учета должено быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var ppValue = $(tableID).find("#ppValue").val();
+        if (ppValue == '') {
+            alert = 'Не указана глубина опроса профиля мощности!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(ppValue) || parseInt(ppValue) < 1) {
+            alert = 'Глубина опроса профиля мощности должена быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var fixDay = $(tableID).find("#fixDay").val();
+        if (fixDay == '') {
+            alert = 'Не указана глубина опроса зафиксированных показаний!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(fixDay) || parseInt(fixDay) < 1) {
+            alert = 'Глубина опроса зафиксированных показаний должена быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var ch_settings = $(tableID).find("#ch_settings").val();
+        // if (ch_settings == '') {
+        //     alert = 'Вообще есть настройки по-умолчанию, но...';
+        //     $(".alert").show().html(alert);
+        //     result = false;
+        // }
+        return result;
+    }
     $("#wh_add_dialog").html(html);
     $("#wh_add_dialog").dialog({
         title: 'Добавление прибора учета',
-        height: 560,
-        width: 450,
+        height: 650,
+        width: 550,
         modal: true,
         resizable: true,
         buttons: [
@@ -133,9 +229,11 @@ function addMeterDialog(meters) {
                 },
             click: function () {
                     var tableID = $("#wh_add");
-                    var params = collectValues(tableID);
-                    meters.addNewMeter(params);
-                    $(this).dialog("close");
+                    if (validateValues(tableID)) {
+                        var params = collectValues(tableID);
+                        meters.addNewMeter(params);
+                        $(this).dialog("close");
+                    }
                 }
             }
           ]
@@ -146,6 +244,7 @@ function editMeterDialog(meter, meters) {
     var self = meter;
     var meters = meters;
     var html = '';
+    html += '<div class="alert alert-danger" hidden></div>';
     html += '<table id="wh_edit_'+self.id+'" class="table table-bordered table-hover">';
     html += '<tr><td>Объект</td><td><select id="object_id">';
     for (var obj in meters.objects) {
@@ -222,11 +321,106 @@ function editMeterDialog(meter, meters) {
         result['is_active'] = $(tableID).find("#is_active").val();
         return result;
     }
+    function validateValues(tableID) {
+        var result = true;
+        var alert = '';
+        var wh_desc = $(tableID).find("#wh_desc").val();
+        if (wh_desc == '') {
+            alert = 'Описание прибора учета не должно быть пустым!<br> Сами же запутаетесь...';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_num = $(tableID).find("#wh_num").val();
+        if (wh_num == '') {
+            alert = 'Не указан номер прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_adr = $(tableID).find("#wh_adr").val();
+        if (wh_adr == '') {
+            alert = 'Не указан сетевой адрес прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if (!$.isNumeric(wh_adr)) {
+            alert = 'Сетевой адрес должен быть числом!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_pass = $(tableID).find("#wh_pass").val();
+        if (wh_pass == '') {
+            alert = 'Не указан пароль прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_KI = $(tableID).find("#wh_KI").val();
+        if (wh_KI == '') {
+            alert = 'Не указан коэффициент трансформации тока!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_KI) || parseInt(wh_KI) < 1) {
+            alert = 'Коэффициент трансформации тока должен быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_KU = $(tableID).find("#wh_KU").val();
+        if (wh_KU == '') {
+            alert = 'Не указан коэффициент трансформации напряжения!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_KU) || parseInt(wh_KU) < 1) {
+            alert = 'Коэффициент трансформации напряжения должен быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var wh_IMPL = $(tableID).find("#wh_IMPL").val();
+        if (wh_IMPL == '') {
+            alert = 'Не указано количество импульсов прибора учета!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(wh_IMPL) || parseInt(wh_IMPL) < 1) {
+            alert = 'Количество импульсов прибора учета должено быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var ppValue = $(tableID).find("#ppValue").val();
+        if (ppValue == '') {
+            alert = 'Не указана глубина опроса профиля мощности!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(ppValue) || parseInt(ppValue) < 1) {
+            alert = 'Глубина опроса профиля мощности должена быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var fixDay = $(tableID).find("#fixDay").val();
+        if (fixDay == '') {
+            alert = 'Не указана глубина опроса зафиксированных показаний!';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        else if(!$.isNumeric(fixDay) || parseInt(fixDay) < 1) {
+            alert = 'Глубина опроса зафиксированных показаний должена быть числом больше либо равным 1 !';
+            $(".alert").show().html(alert);
+            result = false;
+        }
+        var ch_settings = $(tableID).find("#ch_settings").val();
+        // if (ch_settings == '') {
+        //     alert = 'Вообще есть настройки по-умолчанию, но...';
+        //     $(".alert").show().html(alert);
+        //     result = false;
+        // }
+        return result;
+    }
     $("#wh_edit_dialog").html(html);
     $("#wh_edit_dialog").dialog({
         title: 'Редактирование прибора учета',
-        height: 560,
-        width: 450,
+        height: 650,
+        width: 550,
         modal: true,
         resizable: true,
         buttons: [
@@ -237,9 +431,11 @@ function editMeterDialog(meter, meters) {
                 },
             click: function () {
                     var tableID = $("#wh_edit_"+self.id);
-                    var params = collectValues(tableID);
-                    self.saveParams(params, meters);
-                    $(this).dialog("close");
+                    if (validateValues(tableID)) {
+                        var params = collectValues(tableID);
+                        self.saveParams(params, meters);
+                        $(this).dialog("close");
+                    }
                 }
             }
           ]
