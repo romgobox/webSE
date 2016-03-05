@@ -12,17 +12,17 @@ function renderRequestsUI() {
 ////////////////////////////////////////////////////////////////////////////////
 // Dialogs
 ////////////////////////////////////////////////////////////////////////////////()
-function metersSelectByObject(meters) {
-    var meters = meters['meters'];
-    var obj_id = parseInt($("#select_object").val());
-    var wh_list = '';
-    for (var i = 0; i < meters.length; i++) {
-        if (meters[i]['object_id']['id'] == obj_id) {
-            wh_list += '<option value="'+meters[i]['id']+'">'+meters[i]['wh_desc']+' - '+meters[i]['wh_num']+'</option>'
-        }
-    };
-    $("#select_meter").html(wh_list);
-}
+// function metersSelectByObject(meters) {
+//     var meters = meters['meters'];
+//     var obj_id = parseInt($("#select_object").val());
+//     var wh_list = '';
+//     for (var i = 0; i < meters.length; i++) {
+//         if (meters[i]['object_id']['id'] == obj_id) {
+//             wh_list += '<option value="'+meters[i]['id']+'">'+meters[i]['wh_desc']+' - '+meters[i]['wh_num']+'</option>'
+//         }
+//     };
+//     $("#select_meter").html(wh_list);
+// }
 function requestByChannelsDialog(meters, reply) {
     var reply = reply || false;
     var meters = meters;
