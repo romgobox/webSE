@@ -27,10 +27,11 @@ def add_object(data, user_id=None):
     object_sql = u'''
     INSERT INTO objects 
     VALUES(
-        Null, 
+        DEFAULT,
         {higher},
         '{obj_desc}',
         {user_id})
+    RETURNING id
     '''.format(obj_desc=data['obj_desc'],
                 higher=data['higher'],
                 user_id=user_id)
@@ -40,7 +41,7 @@ def add_object(data, user_id=None):
         cur, con = get_db()
         cur.execute(object_sql)
         con.commit()
-        data['id'] = cur.lastrowid
+        data['id'] = cur.fetchone()['id']
         response = data
         response['status'] = u'Добавлен новый объект учета'
     except Exception, e:

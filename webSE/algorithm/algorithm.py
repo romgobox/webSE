@@ -85,7 +85,7 @@ class Algorithm(object):
             madr = meter['wh_adr']
             mnum = meter['wh_num']
             mpass = meter['wh_pass']
-            params = json.loads(meter['wh_settings'])
+            params = meter['wh_settings']
             protocol = meter['pr_name']
             meter = Meter(mid, madr, mnum, mpass, protocol=ProtocolFactory.get_protocol(protocol), 
                                                             channel=channel, parameters=params)

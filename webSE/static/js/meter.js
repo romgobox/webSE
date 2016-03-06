@@ -9,9 +9,9 @@ var Meter = function(data, meters) {
     this.wh_num = data['wh_num'];
     this.wh_pass = data['wh_pass'];
     this.wh_desc = data['wh_desc'];
-    this.wh_KI = data['wh_KI'];
-    this.wh_KU = data['wh_KU'];
-    this.wh_IMPL = data['wh_IMPL'];
+    this.wh_ki = data['wh_ki'];
+    this.wh_ku = data['wh_ku'];
+    this.wh_impl = data['wh_impl'];
     this.ppValue = data['wh_settings']['ppValue'];
     this.fixDay = data['wh_settings']['fixDay'];
     this.object_id = typeof meters.objects[data['object_id']] == 'undefined' ? {} : meters.objects[data['object_id']];
@@ -61,9 +61,9 @@ Meter.prototype.updateData = function (data, meters) {
     this.wh_num = data['wh_num'];
     this.wh_pass = data['wh_pass'];
     this.wh_desc = data['wh_desc'];
-    this.wh_KI = data['wh_KI'];
-    this.wh_KU = data['wh_KU'];
-    this.wh_IMPL = data['wh_IMPL'];
+    this.wh_ki = data['wh_ki'];
+    this.wh_ku = data['wh_ku'];
+    this.wh_impl = data['wh_impl'];
     this.ppValue = data['wh_settings']['ppValue'];
     this.fixDay = data['wh_settings']['fixDay'];
     this.object_id = typeof meters.objects[data['object_id']] == 'undefined' ? {} : meters.objects[data['object_id']];

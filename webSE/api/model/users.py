@@ -19,14 +19,10 @@ def get_user_info(user_id=None):
         r.id role_id,
         r.name role_name,
         r.short_name role_short_name
-    FROM 
-        users u, 
-        organisations org, 
-        user_roles r
-    WHERE 
-        u.id={user_id} 
-        AND u.organisation_id=org.id 
-        AND u.role_id=r.id
+    FROM users u
+    LEFT JOIN organisations org ON u.organisation_id=org.id
+    JOIN user_roles r ON u.role_id=r.id
+    WHERE u.id={user_id};
     '''.format(user_id=user_id)
 
     cur, con = get_db()

@@ -29,9 +29,9 @@ class MetersAPI(MethodView):
         data['wh_num'] = request.json['wh_num']
         data['wh_pass'] = request.json['wh_pass']
         data['wh_desc'] = request.json['wh_desc']
-        data['wh_KI'] = int(request.json['wh_KI'])
-        data['wh_KU'] = int(request.json['wh_KU'])
-        data['wh_IMPL'] = int(request.json['wh_IMPL'])
+        data['wh_ki'] = int(request.json['wh_ki'])
+        data['wh_ku'] = int(request.json['wh_ku'])
+        data['wh_impl'] = int(request.json['wh_impl'])
         data['wh_settings'] = request.json['wh_settings']
         data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])
@@ -48,9 +48,9 @@ class MetersAPI(MethodView):
         data['wh_num'] = request.json['wh_num']
         data['wh_pass'] = request.json['wh_pass']
         data['wh_desc'] = request.json['wh_desc']
-        data['wh_KI'] = int(request.json['wh_KI'])
-        data['wh_KU'] = int(request.json['wh_KU'])
-        data['wh_IMPL'] = int(request.json['wh_IMPL'])
+        data['wh_ki'] = int(request.json['wh_ki'])
+        data['wh_ku'] = int(request.json['wh_ku'])
+        data['wh_impl'] = int(request.json['wh_impl'])
         data['wh_settings'] = request.json['wh_settings']
         data['object_id'] = int(request.json['object_id'])
         data['channel_id'] = int(request.json['channel_id'])

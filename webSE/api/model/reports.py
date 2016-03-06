@@ -67,7 +67,7 @@ def get_report_diff_by_meter_id(data):
     cur.execute(date_start_sql)
     date_start_value = cur.fetchone()
     if date_start_value:
-        datetime_value = dict(date_start_value)
+        date_start_value = dict(date_start_value)
         date_start_value['datetime_value'] = date_start_value['datetime_value'].strftime('%d.%m.%y %H:%M:%S')
     else:
         date_start_value = {}

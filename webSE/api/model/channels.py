@@ -25,7 +25,6 @@ def get_channels(user_id=None):
     channels_list = []
     for row in channels:
         channel = dict(row)
-        channel['ch_settings'] = json.loads(channel['ch_settings'])
         channels_list.append(channel)
     return channels_list
 
@@ -33,7 +32,7 @@ def add_channel(data, user_id=None):
     channel_sql = u'''
     INSERT INTO channels 
     VALUES(
-        Null, 
+        DEFAULT,
         '{ch_desc}', 
         '{ch_ip}',
         {type_id}, 
@@ -41,6 +40,7 @@ def add_channel(data, user_id=None):
         '{ch_settings}',
         {is_active},
         {user_id})
+    RETURNING id
     '''.format(
             ch_desc=data['ch_desc'], 
             ch_ip=data['ch_ip'], 
@@ -56,7 +56,7 @@ def add_channel(data, user_id=None):
         cur, con = get_db()
         cur.execute(channel_sql)
         con.commit()
-        data['id'] = cur.lastrowid
+        data['id'] = cur.fetchone()['id']
         insert_channel_status(channel_id=data['id'], status_code=-1, cur=cur, con=con)
         response = data
         response['status'] = u'Добавлен новый канал опроса'
