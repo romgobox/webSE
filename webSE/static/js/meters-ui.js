@@ -86,9 +86,9 @@ function addMeterDialog(meters) {
     html += '<tr><td>Номер</td><td><input id="wh_num" type="text" value=""></td></tr>';
     html += '<tr><td>Адрес</td><td><input id="wh_adr" type="text" value=""></td></tr>';
     html += '<tr><td>Пароль</td><td><input id="wh_pass" type="text" value=""></td></tr>';
-    html += '<tr><td>К-т трансформации тока</td><td><input id="wh_KI" type="text" value="1"></td></tr>';
-    html += '<tr><td>К-т трансформации напряжения</td><td><input id="wh_KU" type="text" value="1"></td></tr>';
-    html += '<tr><td>Кол-во импульсов</td><td><input id="wh_IMPL" type="text" value="1"></td></tr>';
+    html += '<tr><td>К-т трансформации тока</td><td><input id="wh_ki" type="text" value="1"></td></tr>';
+    html += '<tr><td>К-т трансформации напряжения</td><td><input id="wh_ku" type="text" value="1"></td></tr>';
+    html += '<tr><td>Кол-во импульсов</td><td><input id="wh_impl" type="text" value="1"></td></tr>';
     html += '<tr><td>Профиль глубина</td><td><input id="ppValue" type="text" value="1"></tr>';
     html += '<tr><td>Показания глубина</td><td><input id="fixDay" type="text" value="1"></td></tr>';
     html += '<tr><td>Канал опроса</td><td><select id="channel_id">';
@@ -109,9 +109,9 @@ function addMeterDialog(meters) {
         result['wh_num'] = $(tableID).find("#wh_num").val();
         result['wh_adr'] = $(tableID).find("#wh_adr").val();
         result['wh_pass'] = $(tableID).find("#wh_pass").val();
-        result['wh_KI'] = $(tableID).find("#wh_KI").val();
-        result['wh_KU'] = $(tableID).find("#wh_KU").val();
-        result['wh_IMPL'] = $(tableID).find("#wh_IMPL").val();
+        result['wh_ki'] = $(tableID).find("#wh_ki").val();
+        result['wh_ku'] = $(tableID).find("#wh_ku").val();
+        result['wh_impl'] = $(tableID).find("#wh_impl").val();
         var ppV = $(tableID).find("#ppValue").val();
         var fixD = $(tableID).find("#fixDay").val();
         result['wh_settings'] = {fixDay:fixD, ppValue:ppV};
@@ -151,35 +151,35 @@ function addMeterDialog(meters) {
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_KI = $(tableID).find("#wh_KI").val();
-        if (wh_KI == '') {
+        var wh_ki = $(tableID).find("#wh_ki").val();
+        if (wh_ki == '') {
             alert = 'Не указан коэффициент трансформации тока!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_KI) || parseInt(wh_KI) < 1) {
+        else if(!$.isNumeric(wh_ki) || parseInt(wh_ki) < 1) {
             alert = 'Коэффициент трансформации тока должен быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_KU = $(tableID).find("#wh_KU").val();
-        if (wh_KU == '') {
+        var wh_ku = $(tableID).find("#wh_ku").val();
+        if (wh_ku == '') {
             alert = 'Не указан коэффициент трансформации напряжения!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_KU) || parseInt(wh_KU) < 1) {
+        else if(!$.isNumeric(wh_ku) || parseInt(wh_ku) < 1) {
             alert = 'Коэффициент трансформации напряжения должен быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_IMPL = $(tableID).find("#wh_IMPL").val();
-        if (wh_IMPL == '') {
+        var wh_impl = $(tableID).find("#wh_impl").val();
+        if (wh_impl == '') {
             alert = 'Не указано количество импульсов прибора учета!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_IMPL) || parseInt(wh_IMPL) < 1) {
+        else if(!$.isNumeric(wh_impl) || parseInt(wh_impl) < 1) {
             alert = 'Количество импульсов прибора учета должено быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;
@@ -271,9 +271,9 @@ function editMeterDialog(meter, meters) {
     html += '<tr><td>Номер</td><td><input id="wh_num" type="text" value="'+self.wh_num+'"></td></tr>';
     html += '<tr><td>Адрес</td><td><input id="wh_adr" type="text" value="'+self.wh_adr+'"></td></tr>';
     html += '<tr><td>Пароль</td><td><input id="wh_pass" type="text" value="'+self.wh_pass+'"></td></tr>';
-    html += '<tr><td>К-т трансформации тока</td><td><input id="wh_KI" type="text" value="'+self.wh_KI+'"></td></tr>';
-    html += '<tr><td>К-т трансформации напряжения</td><td><input id="wh_KU" type="text" value="'+self.wh_KU+'"></td></tr>';
-    html += '<tr><td>Кол-во импульсов</td><td><input id="wh_IMPL" type="text" value="'+self.wh_IMPL+'"></td></tr>';
+    html += '<tr><td>К-т трансформации тока</td><td><input id="wh_ki" type="text" value="'+self.wh_ki+'"></td></tr>';
+    html += '<tr><td>К-т трансформации напряжения</td><td><input id="wh_ku" type="text" value="'+self.wh_ku+'"></td></tr>';
+    html += '<tr><td>Кол-во импульсов</td><td><input id="wh_impl" type="text" value="'+self.wh_impl+'"></td></tr>';
     html += '<tr><td>Профиль глубина</td><td><input id="ppValue" type="text" value="'+self.ppValue+'"></tr>';
     html += '<tr><td>Показания глубина</td><td><input id="fixDay" type="text" value="'+self.fixDay+'"></td></tr>';
     html += '<tr><td>Канал опроса</td><td><select id="channel_id">';
@@ -311,9 +311,9 @@ function editMeterDialog(meter, meters) {
         result['wh_num'] = $(tableID).find("#wh_num").val();
         result['wh_adr'] = $(tableID).find("#wh_adr").val();
         result['wh_pass'] = $(tableID).find("#wh_pass").val();
-        result['wh_KI'] = $(tableID).find("#wh_KI").val();
-        result['wh_KU'] = $(tableID).find("#wh_KU").val();
-        result['wh_IMPL'] = $(tableID).find("#wh_IMPL").val();
+        result['wh_ki'] = $(tableID).find("#wh_ki").val();
+        result['wh_ku'] = $(tableID).find("#wh_ku").val();
+        result['wh_impl'] = $(tableID).find("#wh_impl").val();
         var ppV = $(tableID).find("#ppValue").val();
         var fixD = $(tableID).find("#fixDay").val();
         result['wh_settings'] = {fixDay:fixD, ppValue:ppV};
@@ -353,35 +353,35 @@ function editMeterDialog(meter, meters) {
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_KI = $(tableID).find("#wh_KI").val();
-        if (wh_KI == '') {
+        var wh_ki = $(tableID).find("#wh_ki").val();
+        if (wh_ki == '') {
             alert = 'Не указан коэффициент трансформации тока!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_KI) || parseInt(wh_KI) < 1) {
+        else if(!$.isNumeric(wh_ki) || parseInt(wh_ki) < 1) {
             alert = 'Коэффициент трансформации тока должен быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_KU = $(tableID).find("#wh_KU").val();
-        if (wh_KU == '') {
+        var wh_ku = $(tableID).find("#wh_ku").val();
+        if (wh_ku == '') {
             alert = 'Не указан коэффициент трансформации напряжения!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_KU) || parseInt(wh_KU) < 1) {
+        else if(!$.isNumeric(wh_ku) || parseInt(wh_ku) < 1) {
             alert = 'Коэффициент трансформации напряжения должен быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;
         }
-        var wh_IMPL = $(tableID).find("#wh_IMPL").val();
-        if (wh_IMPL == '') {
+        var wh_impl = $(tableID).find("#wh_impl").val();
+        if (wh_impl == '') {
             alert = 'Не указано количество импульсов прибора учета!';
             $(".alert").show().html(alert);
             result = false;
         }
-        else if(!$.isNumeric(wh_IMPL) || parseInt(wh_IMPL) < 1) {
+        else if(!$.isNumeric(wh_impl) || parseInt(wh_impl) < 1) {
             alert = 'Количество импульсов прибора учета должено быть числом больше либо равным 1 !';
             $(".alert").show().html(alert);
             result = false;

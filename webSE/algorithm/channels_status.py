@@ -23,7 +23,7 @@ def insertChannelStatus(cur, con, channel_id, status_code, status_string=None):
     channel_status_sql = u'''
         INSERT INTO channels_status 
         VALUES(
-            Null, 
+            DEFAULT,
             {channel_id}, 
             '{status_datetime}',
             {status_code}, 

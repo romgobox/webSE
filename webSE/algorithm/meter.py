@@ -67,13 +67,13 @@ class Meter(object):
                 datercv = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
                 sql = '''
                 INSERT INTO meters_values 
-                VALUES(Null, {id}, 1, '{datercv}', '{dateval}', {value})
+                VALUES(DEFAULT, {id}, 1, '{datercv}', '{dateval}', {value})
                 '''.format(id=self.id, datercv=datercv, dateval=dateval, value=value['Sum'])
                 try:
                     cur.execute(sql)
                     logging.debug(sql)
                 except Exception, e:
-                    logging.error('Не удалось сохранить зафиксированные значения. Причина: %s', e)
+                    logging.error(u'Не удалось сохранить зафиксированные значения. Причина: %s', e)
 
         con.commit()
 
@@ -87,13 +87,13 @@ class Meter(object):
                 datercv = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
                 sql = '''
                 INSERT INTO meters_values 
-                VALUES(Null, {id}, 2, '{datercv}', '{dateval}', {value})
+                VALUES(DEFAULT, {id}, 2, '{datercv}', '{dateval}', {value})
                 '''.format(id=self.id, datercv=datercv, dateval=dateval, value=value)
                 try:
                     cur.execute(sql)
                     logging.debug(sql)
                 except Exception, e:
-                    logging.error('Не удалось сохранить получасовые значения. Причина: %s', e)
+                    logging.error(u'Не удалось сохранить получасовые значения. Причина: %s', e)
         con.commit()
 
     def getppValueMap(self, depth):
@@ -138,7 +138,6 @@ class Meter(object):
         return dates
 
     def checkFixDayValInDB(self, depth):
-        # import pudb; pu.db
         cur, con = get_db()
         datesList = []
         datesList = dateList(depth)
